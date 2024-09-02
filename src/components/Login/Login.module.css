@@ -1,0 +1,21 @@
+  /* src/components/Login/Login.module.css */
+  @import '../../styles/variables.css';
+
+  .loginForm {
+      max-width: 300px;
+      margin: calc(var(--spacing-unit) * 4) auto;
+      padding: calc(var(--spacing-unit) * 3);
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .title {
+      color: var(--primary-color);
+      margin-bottom: calc(var(--spacing-unit) * 2);
+  }
+
+  .errorMessage {
+      color: var(--danger-color);
+      margin-bottom: var(--spacing-unit);
+  }
