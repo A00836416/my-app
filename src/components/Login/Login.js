@@ -23,24 +23,42 @@ const Login = () => {
     };
 
     return (
-        <div className={styles.loginForm}>
-            <h2 className={styles.title}>Login</h2>
-            {error && <p className={styles.errorMessage}>{error}</p>}
-            <form onSubmit={handleLogin}>
-                <Input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
-                />
-                <Input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                />
-                <Button type="submit">Login</Button>
-            </form>
+        <div className={styles.SignUp}>
+            <div className={styles.loginBack}>
+                <div className={styles.loginForm}>
+                    <h2 className={styles.title}>Login</h2>
+                    {error && <p className={styles.errorMessage}>{error}</p>}
+                    <form onSubmit={handleLogin}>
+
+                        <label htmlFor="username" className={styles.label}>Email</label>
+                        <Input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Value"
+                        />
+
+                        <label htmlFor="password" className={styles.label}>Contraseña</label>
+                        <Input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Value"
+                        />
+                        <Button type="submit">Log In</Button>
+
+                        <a href="/link" className={styles.link}>Forgot password?</a>
+                    </form>
+                    
+                        
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+            <footer>Need an account?  <a href="/link">Sign up here</a></footer>
         </div>
     );
 };
