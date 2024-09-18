@@ -11,6 +11,11 @@
     margin: 0;
 }
 
+  .SignUp img{
+    width: 270px;
+    height: 270px;
+  }
+
   .SignUp footer{
     color: #fff;
     text-align: center;
@@ -99,3 +104,6 @@ button[type="submit"]:hover {
 
 }
 
+.SignUp{
+    margin-bottom: 50%;
+}
