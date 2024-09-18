@@ -5,6 +5,7 @@ import { AuthContext } from '../../App';
 import Button from '../shared/Button/Button';
 import Input from '../shared/InputLogin/Input';
 import styles from './Login.module.css';
+import logo from './assets/img/kia-logo-nuevo-blanco-1.png';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -26,6 +27,7 @@ const Login = () => {
 
     return (
         <div className={styles.SignUp}>
+            <img src={logo}></img>
             <div className={styles.loginBack}>
                 <div className={styles.loginForm}>
                     <h2 className={styles.title}>Login</h2>
