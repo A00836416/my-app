@@ -27,7 +27,7 @@ const Login = () => {
 
     return (
         <div className={styles.SignUp}>
-            <img src={logo}></img>
+            <img src={logo} alt="Logo de la empresa" />
             <div className={styles.loginBack}>
                 <div className={styles.loginForm}>
                     <h2 className={styles.title}>Login</h2>

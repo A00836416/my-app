@@ -3,7 +3,7 @@ import { logout, checkAuthStatus } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../App';
 
-const Home = () => {
+const HomePage = () => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
     const { setIsAuthenticated } = useContext(AuthContext);
@@ -43,4 +43,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HomePage;

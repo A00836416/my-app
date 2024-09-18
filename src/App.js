@@ -1,10 +1,10 @@
 // src/App.js
 import React, { createContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './components/Login/Login';
-import Home from './components/Home/Home';
 import { checkAuthStatus } from './services/api';
 import './App.css';
+import HomePage from './pages/HomePage/home';
+import LoginPage from './pages/login';
 
 export const AuthContext = createContext(null);
 
@@ -35,8 +35,8 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
-            <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <Login />} />
-            <Route path="/home" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <LoginPage />} />
+            <Route path="/home" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
             <Route path="/" element={<Navigate to="/home" />} />
           </Routes>
         </div>
