@@ -2,15 +2,6 @@
   @import '../../styles/variables.css';
 
 
-  body {
-    background: linear-gradient(to bottom, #1f2f30, #7cb1b8);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-  }
-
   .SignUp img {
     width: 270px;
     height: 270px;

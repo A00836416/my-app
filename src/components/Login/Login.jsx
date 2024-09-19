@@ -12,18 +12,24 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { setIsAuthenticated } = useContext(AuthContext);
+    const { setIsAuthenticated, setUserRole } = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await login(username, password);
+            const userData = await login(username, password);
             setIsAuthenticated(true);
-            navigate('/home');
+            setUserRole(userData.rol);
+            if (userData.rol === 'administrador') {
+                navigate('/admin');
+            } else {
+                navigate('/home');
+            }
         } catch (err) {
             setError('Credenciales inválidas');
         }
     };
+
 
     return (
         <div className={styles.SignUp}>

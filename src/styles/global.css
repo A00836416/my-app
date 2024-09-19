@@ -1,12 +1,25 @@
 /* src/styles/global.css */
 @import 'variables.css';
 
+
+/* src/index.css o src/App.css (estilos globales) */
+html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+
 body {
     font-family: var(--font-family);
     font-size: var(--font-size-base);
     line-height: 1.5;
     color: var(--dark-color);
     background-color: var(--light-color);
+
+    /* Previene el scroll */
 }
 
 .container {

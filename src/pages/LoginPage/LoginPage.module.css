@@ -1,0 +1,18 @@
+  /* src/components/Login/Login.module.css */
+  @import '../../styles/variables.css';
+
+  .LoginContainer {
+      background: linear-gradient(to bottom, #1f2f30, #7cb1b8);
+
+      /* Cambiado de height a min-height */
+      width: 100vw;
+      /* Asegura que ocupe todo el ancho */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+
+      /* Previene el scroll */
+  }
