@@ -1,6 +1,9 @@
 /* src/styles/global.css */
 @import 'variables.css';
 
+* {
+    box-sizing: border-box;
+}
 
 /* src/index.css o src/App.css (estilos globales) */
 html,
@@ -9,6 +12,7 @@ body,
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden; /* Evita el scroll */
 
 }
 
