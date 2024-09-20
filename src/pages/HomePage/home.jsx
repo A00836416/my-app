@@ -6,7 +6,7 @@ import { AuthContext } from '../../App';
 const HomePage = () => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-    const { setIsAuthenticated } = useContext(AuthContext);
+    const { setAuthState } = useContext(AuthContext);
 
     useEffect(() => {
         const fetchAuthStatus = async () => {
@@ -14,17 +14,21 @@ const HomePage = () => {
                 const userData = await checkAuthStatus();
                 setUser(userData);
             } catch (error) {
-                setIsAuthenticated(false);
+                setAuthState(prevState => ({ ...prevState, isAuthenticated: false }));
                 navigate('/login');
             }
         };
         fetchAuthStatus();
-    }, [navigate, setIsAuthenticated]);
+    }, [navigate, setAuthState]);
 
     const handleLogout = async () => {
         try {
             await logout();
-            setIsAuthenticated(false);
+            setAuthState(prevState => ({
+                ...prevState,
+                isAuthenticated: false,
+                userRole: null
+            }));
             navigate('/login');
         } catch (error) {
             console.error('Error during logout:', error);
