@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage/home';
 import LoginPage from './pages/LoginPage/login';
 import AdminPage from './pages/admin';
 import ProfilePage from './pages/ProfilePage/profile';
+import Welcome from './components/Welcome/Welcome';
 
 export const AuthContext = createContext(null);
 
@@ -46,6 +47,7 @@ function App() {
   };
 
   const routes = {
+    '/Welcome': <Welcome/>,
     '/login': <LoginPage />,
     '/home': <ProtectedRoute><HomePage /></ProtectedRoute>,
     '/admin': <ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>,
