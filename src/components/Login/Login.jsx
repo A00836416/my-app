@@ -12,14 +12,17 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { setIsAuthenticated, setUserRole } = useContext(AuthContext);
+    const { setAuthState } = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const userData = await login(username, password);
-            setIsAuthenticated(true);
-            setUserRole(userData.rol);
+            setAuthState({
+                isAuthenticated: true,
+                userRole: userData.rol,
+                loading: false
+            });
             if (userData.rol === 'administrador') {
                 navigate('/admin');
             } else {
@@ -30,16 +33,15 @@ const Login = () => {
         }
     };
 
-
     return (
         <div className={styles.SignUp}>
             <img src={logo} alt="Logo de la empresa" />
             <div className={styles.loginBack}>
                 <div className={styles.loginForm}>
-                    <h2 className={styles.title}>Login</h2>
+                    <h2 className={styles.title}>Log In</h2>
                     {error && <p className={styles.errorMessage}>{error}</p>}
                     <form onSubmit={handleLogin}>
-                        <label htmlFor="username" className={styles.label}>Email</label>
+                        <label htmlFor="username" className={styles.label}>Usuario</label>
                         <Input
                             type="text"
                             id="username"
@@ -55,7 +57,7 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password"
                         />
-                        <Button type="submit">LogIn</Button>
+                        <Button type="submit">Log In</Button>
                         <a href="/forgot-password" className={styles.link}>Forgot password?</a>
                     </form>
                 </div>
