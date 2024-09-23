@@ -5,6 +5,7 @@ import './App.css';
 import HomePage from './pages/HomePage/home';
 import LoginPage from './pages/LoginPage/login';
 import AdminPage from './pages/admin';
+import Welcome from './components/Welcome/Welcome';
 
 export const AuthContext = createContext(null);
 
@@ -41,6 +42,7 @@ function App() {
             <Route path="/login" element={isAuthenticated ? (userRole === 'administrador' ? <Navigate to="/admin" /> : <Navigate to="/home" />) : <LoginPage />} />
             <Route path="/home" element={isAuthenticated && userRole !== 'administrador' ? <HomePage /> : <Navigate to="/login" />} />
             <Route path="/admin" element={isAuthenticated && userRole === 'administrador' ? <AdminPage /> : <Navigate to="/login" />} />
+            <Route path="/Welcome" element={<Welcome/>}></Route>
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </div>
