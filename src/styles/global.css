@@ -1,9 +1,6 @@
 /* src/styles/global.css */
 @import 'variables.css';
 
-* {
-    box-sizing: border-box;
-}
 
 /* src/index.css o src/App.css (estilos globales) */
 html,
@@ -30,4 +27,5 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 calc(var(--spacing-unit) * 2);
+    
 }
