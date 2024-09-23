@@ -12,14 +12,17 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { setIsAuthenticated, setUserRole } = useContext(AuthContext);
+    const { setAuthState } = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const userData = await login(username, password);
-            setIsAuthenticated(true);
-            setUserRole(userData.rol);
+            setAuthState({
+                isAuthenticated: true,
+                userRole: userData.rol,
+                loading: false
+            });
             if (userData.rol === 'administrador') {
                 navigate('/admin');
             } else {
@@ -29,7 +32,6 @@ const Login = () => {
             setError('Credenciales inválidas');
         }
     };
-
 
     return (
         <div className={styles.SignUp}>
