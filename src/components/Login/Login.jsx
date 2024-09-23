@@ -41,7 +41,7 @@ const Login = () => {
                     <h2 className={styles.title}>Login</h2>
                     {error && <p className={styles.errorMessage}>{error}</p>}
                     <form onSubmit={handleLogin}>
-                        <label htmlFor="username" className={styles.label}>Email</label>
+                        <label htmlFor="username" className={styles.label}>Usuario</label>
                         <Input
                             type="text"
                             id="username"
