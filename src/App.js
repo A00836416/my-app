@@ -5,6 +5,7 @@ import './App.css';
 import HomePage from './pages/HomePage/home';
 import LoginPage from './pages/LoginPage/login';
 import AdminPage from './pages/admin';
+import ProfilePage from './pages/ProfilePage/profile';
 
 export const AuthContext = createContext(null);
 
@@ -48,6 +49,7 @@ function App() {
     '/login': <LoginPage />,
     '/home': <ProtectedRoute><HomePage /></ProtectedRoute>,
     '/admin': <ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>,
+    '/profile': <ProtectedRoute adminOnly={false}><ProfilePage /></ProtectedRoute>,
     '/': <Navigate to={authState.isAuthenticated ? (isAdmin ? "/admin" : "/home") : "/login"} />
   };
 

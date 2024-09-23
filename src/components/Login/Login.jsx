@@ -38,7 +38,7 @@ const Login = () => {
             <img src={logo} alt="Logo de la empresa" />
             <div className={styles.loginBack}>
                 <div className={styles.loginForm}>
-                    <h2 className={styles.title}>Login</h2>
+                    <h2 className={styles.title}>Log In</h2>
                     {error && <p className={styles.errorMessage}>{error}</p>}
                     <form onSubmit={handleLogin}>
                         <label htmlFor="username" className={styles.label}>Usuario</label>
@@ -57,7 +57,7 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password"
                         />
-                        <Button type="submit">LogIn</Button>
+                        <Button type="submit">Log In</Button>
                         <a href="/forgot-password" className={styles.link}>Forgot password?</a>
                     </form>
                 </div>
