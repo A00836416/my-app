@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styles from './ProfilePic.module.css';
+import styles from './ProfileHeader.module.css';
 import FotoPerfil from '../ProfileHeader/img/cars.png';
 
 
-const ProfilePic = () => {
+const ProfileHeader = () => {
     return(
         <div className={styles.ProfilePic}>
             <img src={FotoPerfil} alt="foto perfil" />
@@ -20,4 +20,4 @@ const ProfilePic = () => {
     );
 };
 
-export default ProfilePic;
+export default ProfileHeader;
