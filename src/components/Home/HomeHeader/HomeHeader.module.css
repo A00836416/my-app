@@ -1,0 +1,91 @@
+.welcomeContainer {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 386px;
+    height: 56px;
+    display: flex;
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: center; /* Centra verticalmente los elementos */
+    gap: 10px;
+}
+
+.welcome {
+    color: white;
+    font-size: 18.96px;
+    display: flex; /* Asegúrate de que el contenido dentro también esté en flexbox */
+    flex-direction: column; /* Cambia a columna si deseas apilarlos */
+    justify-content: center; /* Centra verticalmente */
+}
+
+.welcome h1 {
+    color: white;
+    font-size: 18.96px;
+}
+
+.sucursal {
+    font-size: 10.71px;
+    color: #8E8989;
+    margin-left: 5px;
+    text-align: center;
+}
+
+.sucursalContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    width: 97px;
+    height: 17.33px;
+    margin-top: 5px;
+    text-align: bottom;
+}
+
+.sucursalContainer i {
+    margin-right: 5px;
+    color: #8E8989;
+    width: 13px;
+    height: 17.33px;
+    font-size: 17.33px;
+    line-height: 17.33px;
+    display: inline-block;
+}
+
+.perfilButton {
+    padding: 10px 15px;
+    background-color: #2196F3;
+    right: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.perfilButton:hover {
+    background-color: #1976D2;
+}
+
+.notificationsButton {
+    padding: 0; /* Elimina el padding para que el icono no tenga caja */
+    background-color: transparent; /* Elimina el fondo */
+    border: none; /* Asegúrate de que no haya borde */
+    cursor: pointer;
+    color: white;
+    font-size: 30px; /* Aumenta el tamaño del icono (ajusta según sea necesario) */
+}
+
+.notificationsButton i {
+    font-size: 30px; /* Aumenta el tamaño del icono de la campana (ajusta según sea necesario) */
+    line-height: normal; /* Asegúrate de que la línea no afecte el tamaño */
+}
+
+.buttons {
+    display: flex;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    gap: 10px; /* Espacio entre botones si es necesario */
+    justify-content: center; /* Distribuye el espacio entre los elementos */
+    align-items: center;
+}
