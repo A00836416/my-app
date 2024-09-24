@@ -1,24 +1,50 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Table, Button, message, Input, Tag, Modal, Form, Typography, Space } from 'antd';
-import { SearchOutlined, PlusOutlined, UserOutlined, MailOutlined, BankOutlined, TeamOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Table, Button, message, Input, Tag, Modal, Form, Space, Select, DatePicker } from 'antd';
+import { SearchOutlined, PlusOutlined, UserOutlined, MailOutlined, BankOutlined, TeamOutlined, EditOutlined, DeleteOutlined, CalendarOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { employeeService } from '../../services/employeeService';
+import { departmentService } from '../../services/departmentService';
 import { AuthContext } from '../../App';
 
-const { Title } = Typography;
+const { Option } = Select;
 
 const EmployeeManagement = () => {
     const [employees, setEmployees] = useState([]);
+    const [departments, setDepartments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchText, setSearchText] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [form] = Form.useForm();
     const navigate = useNavigate();
-    const { setAuthState } = useContext(AuthContext);
+    const { isAuthenticated, user, userRole, setAuthState } = useContext(AuthContext);
 
     useEffect(() => {
-        fetchEmployees();
-    }, []);
+        if (isAuthenticated && user) {
+            fetchEmployees();
+            fetchDepartments();
+            console.log('Usuario autenticado:', user);
+            console.log('Rol del usuario:', userRole);
+        } else {
+            navigate('/login');
+        }
+    }, [isAuthenticated, user, userRole, navigate]);
+
+    const fetchDepartments = async () => {
+        try {
+            const data = await departmentService.getDepartments();
+            console.log('Departamentos recibidos:', data); // Para depuración
+            if (Array.isArray(data)) {
+                setDepartments(data);
+            } else {
+                console.error('Formato de datos inesperado para departamentos:', data);
+                setDepartments([]);
+            }
+        } catch (error) {
+            console.error('Error al obtener departamentos:', error);
+            message.error('Error al cargar los departamentos');
+            setDepartments([]);
+        }
+    };
 
     const fetchEmployees = async () => {
         try {
@@ -26,13 +52,7 @@ const EmployeeManagement = () => {
             const data = await employeeService.getEmployees();
             setEmployees(data);
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                message.error('Sesión expirada. Por favor, inicie sesión nuevamente.');
-                setAuthState(prevState => ({ ...prevState, isAuthenticated: false }));
-                navigate('/login');
-            } else {
-                message.error('Error al cargar los empleados');
-            }
+            handleApiError(error);
         } finally {
             setLoading(false);
         }
@@ -119,19 +139,41 @@ const EmployeeManagement = () => {
 
     const handleAddEmployee = async (values) => {
         try {
-            await employeeService.addEmployee(values);
+            const employeeData = {
+                datosUsuario: {
+                    userName: values.userName,
+                    contrasena: values.contrasena,
+                    nombre: values.nombre,
+                    apellidoPaterno: values.apellidoPaterno,
+                    apellidoMaterno: values.apellidoMaterno,
+                    fechaNacimiento: values.fechaNacimiento.format('YYYY-MM-DD'),
+                    correoElectronico: values.correoElectronico
+                },
+                datosEmpleado: {
+                    fechaIngreso: values.fechaIngreso.format('YYYY-MM-DD'),
+                    posicion: values.posicion,
+                    departamentoID: values.departamentoID,
+                    supervisorID: user.id,
+                }
+            };
+
+            await employeeService.addEmployee(employeeData);
             message.success('Empleado añadido exitosamente');
             setIsModalVisible(false);
             form.resetFields();
             fetchEmployees();
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                message.error('Sesión expirada. Por favor, inicie sesión nuevamente.');
-                setAuthState(prevState => ({ ...prevState, isAuthenticated: false }));
-                navigate('/login');
-            } else {
-                message.error('Error al añadir empleado');
-            }
+            handleApiError(error);
+        }
+    };
+
+    const handleApiError = (error) => {
+        if (error.response && error.response.status === 401) {
+            message.error('Sesión expirada. Por favor, inicie sesión nuevamente.');
+            setAuthState(prevState => ({ ...prevState, isAuthenticated: false }));
+            navigate('/login');
+        } else {
+            message.error('Error en la operación');
         }
     };
 
@@ -189,6 +231,12 @@ const EmployeeManagement = () => {
                     layout="vertical"
                     onFinish={handleAddEmployee}
                 >
+                    <Form.Item name="userName" label="Nombre de Usuario" rules={[{ required: true }]}>
+                        <Input prefix={<UserOutlined />} />
+                    </Form.Item>
+                    <Form.Item name="contrasena" label="Contraseña" rules={[{ required: true }]}>
+                        <Input.Password prefix={<LockOutlined />} />
+                    </Form.Item>
                     <Form.Item name="nombre" label="Nombre" rules={[{ required: true }]}>
                         <Input prefix={<UserOutlined />} />
                     </Form.Item>
@@ -198,17 +246,27 @@ const EmployeeManagement = () => {
                     <Form.Item name="apellidoMaterno" label="Apellido Materno">
                         <Input prefix={<UserOutlined />} />
                     </Form.Item>
+                    <Form.Item name="fechaNacimiento" label="Fecha de Nacimiento" rules={[{ required: true }]}>
+                        <DatePicker style={{ width: '100%' }} />
+                    </Form.Item>
                     <Form.Item name="correoElectronico" label="Correo Electrónico" rules={[{ required: true, type: 'email' }]}>
                         <Input prefix={<MailOutlined />} />
                     </Form.Item>
-                    <Form.Item name="posicion" label="Posición">
+                    <Form.Item name="fechaIngreso" label="Fecha de Ingreso" rules={[{ required: true }]}>
+                        <DatePicker style={{ width: '100%' }} />
+                    </Form.Item>
+                    <Form.Item name="posicion" label="Posición" rules={[{ required: true }]}>
                         <Input prefix={<BankOutlined />} />
                     </Form.Item>
-                    <Form.Item name="departamento" label="Departamento">
-                        <Input prefix={<TeamOutlined />} />
+                    <Form.Item name="departamentoID" label="Departamento" rules={[{ required: true }]}>
+                        <Select placeholder="Seleccione un departamento">
+                            {Array.isArray(departments) && departments.map(dept => (
+                                <Option key={dept.departamentoID} value={dept.departamentoID}>{dept.nombre}</Option>
+                            ))}
+                        </Select>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" block>
+                        <Button type="primary" htmlType="submit" block >
                             Añadir Empleado
                         </Button>
                     </Form.Item>

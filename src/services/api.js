@@ -25,8 +25,19 @@ export const logout = async () => {
 export const checkAuthStatus = async () => {
     try {
         const response = await axios.get(`${API_URL}/check-auth`);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         throw error.response ? error.response.data : error;
+    }
+};
+
+export const getUserInfo = async (userId) => {
+    try {
+        const response = await axios.get(`${API_URL}/user/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener la información del usuario:", error);
+        throw error;
     }
 };

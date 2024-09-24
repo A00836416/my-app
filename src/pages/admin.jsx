@@ -1,45 +1,70 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Layout, Menu, Typography, Button, message, Card, Avatar } from 'antd';
+import { Layout, Menu, Typography, Button, message, Card, Avatar, Spin } from 'antd';
 import { UserOutlined, ProjectOutlined, TeamOutlined, DashboardOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../src/App';
+import { logout, getUserInfo } from '../services/api';
 import EmployeeManagement from '../components/admin/EmployeeManagement';
 import TaskManagement from '../components/admin/TaskManagement';
 import DepartmentManagement from '../components/admin/DepartmentManagement';
 import TaskProgress from '../components/admin/TaskProgress';
-import AdminDashboardStats from '../components/admin/DashboardStats'; // Asegúrate de crear este archivo
+import AdminDashboardStats from '../components/admin/DashboardStats';
 import logo from '../components/Login/assets/img/kia-logo-nuevo-blanco-1.png';
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
 const AdminPage = () => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
     const [currentView, setCurrentView] = useState('dashboard');
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const { setAuthState } = useContext(AuthContext);
+
+    const { isAuthenticated, userId, userRole, user, setAuthState } = useContext(AuthContext);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                setUser({ userName: 'Admin' });
-            } catch (error) {
-                message.error('Error al cargar los datos del usuario');
-                setAuthState(prevState => ({ ...prevState, isAuthenticated: false }));
-                navigate('/login');
-            } finally {
+        const fetchUserInfo = async () => {
+
+            if (isAuthenticated && userId && !user) {
+                console.log(userId);
+                try {
+                    setLoading(true);
+                    const userInfo = await getUserInfo(userId);
+                    setAuthState(prevState => ({
+                        ...prevState,
+                        user: userInfo
+                    }));
+                } catch (error) {
+                    console.error("Error al obtener la información del usuario:", error);
+                    message.error('No se pudo cargar la información del usuario');
+                } finally {
+                    setLoading(false);
+                }
+            } else {
                 setLoading(false);
             }
         };
-        fetchData();
-    }, [navigate, setAuthState]);
 
-    const handleLogout = () => {
-        message.info('Sesión cerrada');
-        setAuthState(prevState => ({ ...prevState, isAuthenticated: false, userRole: null }));
-        navigate('/login');
+        fetchUserInfo();
+    }, [isAuthenticated, userId, user, setAuthState]);
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        } else if (userRole !== 'administrador') {
+            message.error('No tienes permisos para acceder a esta página');
+            navigate('/home');
+        }
+    }, [isAuthenticated, userRole, navigate]);
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            message.success('Sesión cerrada exitosamente');
+            setAuthState({ isAuthenticated: false, userRole: null, userId: null, user: null });
+            navigate('/login');
+        } catch (error) {
+            message.error('Error al cerrar sesión');
+        }
     };
 
     const menuItems = [
@@ -64,7 +89,17 @@ const AdminPage = () => {
         }
     };
 
-    if (loading) return <div>Cargando...</div>;
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <Spin size="large" />
+            </div>
+        );
+    }
+
+    if (!user) {
+        return <div>No se pudo cargar la información del usuario</div>;
+    }
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -87,19 +122,14 @@ const AdminPage = () => {
                     </Title>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Avatar icon={<UserOutlined />} style={{ marginRight: '8px' }} />
-                        <span style={{ marginRight: '16px' }}>{user.userName}</span>
+                        <span style={{ marginRight: '16px' }}>{`${user.nombre} ${user.apellidoPaterno}`}</span>
                         <Button icon={<LogoutOutlined />} onClick={handleLogout}>
                             Cerrar sesión
                         </Button>
                     </div>
                 </Header>
                 <Content style={{ margin: '24px 16px', overflow: 'initial' }}>
-                    <Card
-                        style={{
-                            borderRadius: '8px',
-                            boxShadow: ''
-                        }}
-                    >
+                    <Card style={{ borderRadius: '8px', boxShadow: '' }}>
                         <Title level={4} style={{ marginBottom: '16px' }}>
                             {currentView.charAt(0).toUpperCase() + currentView.slice(1)}
                         </Title>

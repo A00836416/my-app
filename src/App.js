@@ -14,6 +14,8 @@ function App() {
   const [authState, setAuthState] = useState({
     isAuthenticated: false,
     userRole: null,
+    userId: null,
+    user: null,
     loading: true
   });
 
@@ -21,21 +23,25 @@ function App() {
     const verifyAuth = async () => {
       try {
         const authData = await checkAuthStatus();
+
+        console.log(authData.id);
+        console.log('er');
         setAuthState({
           isAuthenticated: authData.isAuthenticated,
           userRole: authData.user.rol,
+          userId: authData.user.id,
+          user: null,
           loading: false
         });
+
       } catch (error) {
-        setAuthState({ isAuthenticated: false, userRole: null, loading: false });
+        console.error("Error verifying auth:", error);
+        setAuthState({ isAuthenticated: false, userRole: null, userId: null, user: null, loading: false });
       }
     };
     verifyAuth();
   }, []);
 
-  if (authState.loading) {
-    return <div>Loading...</div>;
-  }
 
   const isAdmin = authState.userRole === 'administrador';
 
@@ -47,7 +53,7 @@ function App() {
   };
 
   const routes = {
-    '/Welcome': <Welcome/>,
+    '/Welcome': <Welcome />,
     '/login': <LoginPage />,
     '/home': <ProtectedRoute><HomePage /></ProtectedRoute>,
     '/admin': <ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>,
