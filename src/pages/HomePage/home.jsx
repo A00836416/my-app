@@ -12,9 +12,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 const HomePage = () => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-
     const { setIsAuthenticated } = useContext(AuthContext);
-    
 
     useEffect(() => {
         const fetchAuthStatus = async () => {
@@ -22,35 +20,22 @@ const HomePage = () => {
                 const userData = await checkAuthStatus();
                 setUser(userData);
             } catch (error) {
-                setAuthState(prevState => ({ ...prevState, isAuthenticated: false }));
+                setIsAuthenticated(false);
                 navigate('/login');
             }
         };
         fetchAuthStatus();
-    }, [navigate, setAuthState]);
+    }, [navigate, setIsAuthenticated]);
 
-
-
-    const goToLogoutPage = async () => {
-        try {
-            await logout();
-            setAuthState(prevState => ({
-                ...prevState,
-                isAuthenticated: false,
-                userRole: null
-            }));
-            navigate('/login');
-        } catch (error) {
-            console.error('Error during logout:', error);
-            // Manejar el error de logout aquí si es necesario
-        }
+    const goToLogoutPage = () => {
+        navigate('/logout');
     };
 
     const goToNotifications = () => {
         // Aquí podrías definir qué hacer al hacer clic en el botón de notificaciones
         console.log('Notificaciones');
     };
-    
+
     if (!user) return <div className={styles.loading}>Loading...</div>;
 
     return (
