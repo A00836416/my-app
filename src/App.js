@@ -1,43 +1,72 @@
-// src/App.js
 import React, { createContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { checkAuthStatus } from './services/api';
 import './App.css';
 import HomePage from './pages/HomePage/home';
-import LoginPage from './pages/login';
+import LoginPage from './pages/LoginPage/login';
+import AdminPage from './pages/admin';
+import ProfilePage from './pages/ProfilePage/profile';
+import Welcome from './components/Welcome/Welcome';
 
 export const AuthContext = createContext(null);
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [authState, setAuthState] = useState({
+    isAuthenticated: false,
+    userRole: null,
+    loading: true
+  });
 
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        await checkAuthStatus();
-        setIsAuthenticated(true);
+        const authData = await checkAuthStatus();
+        setAuthState({
+          isAuthenticated: authData.isAuthenticated,
+          userRole: authData.user.rol,
+          loading: false
+        });
       } catch (error) {
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
+        setAuthState({ isAuthenticated: false, userRole: null, loading: false });
       }
     };
     verifyAuth();
   }, []);
 
-  if (loading) {
+  if (authState.loading) {
     return <div>Loading...</div>;
   }
 
+  const isAdmin = authState.userRole === 'administrador';
+
+  const ProtectedRoute = ({ children, adminOnly = false }) => {
+    if (!authState.isAuthenticated) return <Navigate to="/login" />;
+    if (adminOnly && !isAdmin) return <Navigate to="/home" />;
+    if (!adminOnly && isAdmin) return <Navigate to="/admin" />;
+    return children;
+  };
+
+  const routes = {
+    '/Welcome': <Welcome/>,
+    '/login': <LoginPage />,
+    '/home': <ProtectedRoute><HomePage /></ProtectedRoute>,
+    '/admin': <ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>,
+    '/profile': <ProtectedRoute adminOnly={false}><ProfilePage /></ProtectedRoute>,
+    '/': <Navigate to={authState.isAuthenticated ? (isAdmin ? "/admin" : "/home") : "/login"} />
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ ...authState, setAuthState }}>
       <Router>
         <div className="App">
           <Routes>
-            <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <LoginPage />} />
-            <Route path="/home" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
-            <Route path="/" element={<Navigate to="/home" />} />
+            {Object.entries(routes).map(([path, element]) => (
+              <Route key={path} path={path} element={
+                path === '/login' && authState.isAuthenticated ?
+                  <Navigate to={isAdmin ? "/admin" : "/home"} /> :
+                  element
+              } />
+            ))}
           </Routes>
         </div>
       </Router>
