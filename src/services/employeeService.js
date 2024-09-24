@@ -19,7 +19,7 @@ export const employeeService = {
 
     addEmployee: async (employeeData) => {
         try {
-            const response = await axios.post(`${API_URL}/empleados`, employeeData);
+            const response = await axios.post(`${API_URL}/empleados/crear-usuario-empleado`, employeeData);
             return response.data;
         } catch (error) {
             console.error('Error adding employee:', error);

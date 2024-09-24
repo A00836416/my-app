@@ -14,19 +14,43 @@ const Login = () => {
     const navigate = useNavigate();
     const { setAuthState } = useContext(AuthContext);
 
+    const decodeToken = (token) => {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return null;
+        }
+    };
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const userData = await login(username, password);
-            setAuthState({
-                isAuthenticated: true,
-                userRole: userData.rol,
-                loading: false
-            });
-            if (userData.rol === 'administrador') {
-                navigate('/admin');
+            const decodedToken = decodeToken(userData.token);
+
+            if (decodedToken) {
+                setAuthState({
+                    isAuthenticated: true,
+                    userRole: userData.rol,
+                    userId: decodedToken.id,
+                    user: null,
+                    loading: false
+                });
+
+                if (userData.rol === 'administrador') {
+                    navigate('/admin');
+                } else {
+                    navigate('/home');
+                }
             } else {
-                navigate('/home');
+                setError('Error al procesar la información de usuario');
             }
         } catch (err) {
             setError('Credenciales inválidas');
