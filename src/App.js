@@ -23,9 +23,6 @@ function App() {
     const verifyAuth = async () => {
       try {
         const authData = await checkAuthStatus();
-
-        console.log(authData.id);
-        console.log('er');
         setAuthState({
           isAuthenticated: authData.isAuthenticated,
           userRole: authData.user.rol,
@@ -33,7 +30,6 @@ function App() {
           user: null,
           loading: false
         });
-
       } catch (error) {
         console.error("Error verifying auth:", error);
         setAuthState({ isAuthenticated: false, userRole: null, userId: null, user: null, loading: false });
@@ -42,23 +38,15 @@ function App() {
     verifyAuth();
   }, []);
 
-
   const isAdmin = authState.userRole === 'administrador';
 
   const ProtectedRoute = ({ children, adminOnly = false }) => {
+    if (authState.loading) {
+      return <div>Cargando...</div>;
+    }
     if (!authState.isAuthenticated) return <Navigate to="/login" />;
     if (adminOnly && !isAdmin) return <Navigate to="/home" />;
-    if (!adminOnly && isAdmin) return <Navigate to="/admin" />;
     return children;
-  };
-
-  const routes = {
-    '/Welcome': <Welcome />,
-    '/login': <LoginPage />,
-    '/home': <ProtectedRoute><HomePage /></ProtectedRoute>,
-    '/admin': <ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>,
-    '/profile': <ProtectedRoute adminOnly={false}><ProfilePage /></ProtectedRoute>,
-    '/': <Navigate to={authState.isAuthenticated ? (isAdmin ? "/admin" : "/home") : "/login"} />
   };
 
   return (
@@ -66,13 +54,12 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
-            {Object.entries(routes).map(([path, element]) => (
-              <Route key={path} path={path} element={
-                path === '/login' && authState.isAuthenticated ?
-                  <Navigate to={isAdmin ? "/admin" : "/home"} /> :
-                  element
-              } />
-            ))}
+            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/login" element={authState.isAuthenticated ? <Navigate to={isAdmin ? "/admin" : "/home"} /> : <LoginPage />} />
+            <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            <Route path="/" element={<Navigate to={authState.isAuthenticated ? (isAdmin ? "/admin" : "/home") : "/login"} />} />
           </Routes>
         </div>
       </Router>
