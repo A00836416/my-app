@@ -2,11 +2,12 @@ import React, { createContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { checkAuthStatus } from './services/api';
 import './App.css';
-import HomePage from './pages/HomePage/home';
 import LoginPage from './pages/LoginPage/login';
 import AdminPage from './pages/admin';
-import ProfilePage from './pages/ProfilePage/profile';
 import Welcome from './components/Welcome/Welcome';
+import ProtectedLayout from './components/ProtectedLayout/index';
+import HomePage from './pages/HomePage/home';
+import ProfilePage from './pages/ProfilePage/profile';
 import UnityGame from './components/Unity';
 
 export const AuthContext = createContext(null);
@@ -28,7 +29,7 @@ function App() {
           isAuthenticated: authData.isAuthenticated,
           userRole: authData.user.rol,
           userId: authData.user.id,
-          user: null,
+          user: authData.user,
           loading: false
         });
       } catch (error) {
@@ -39,29 +40,46 @@ function App() {
     verifyAuth();
   }, []);
 
-  const isAdmin = authState.userRole === 'administrador';
-
-  const ProtectedRoute = ({ children, adminOnly = false }) => {
-    if (authState.loading) {
-      return <div>Cargando...</div>;
-    }
-    if (!authState.isAuthenticated) return <Navigate to="/login" />;
-    if (adminOnly && !isAdmin) return <Navigate to="/home" />;
-    return children;
-  };
+  if (authState.loading) {
+    return <div className="loading">Cargando...</div>;
+  }
 
   return (
     <AuthContext.Provider value={{ ...authState, setAuthState }}>
       <Router>
-        <div className="App">
+        <div className="app">
           <Routes>
             <Route path="/welcome" element={<Welcome />} />
-            <Route path="/login" element={authState.isAuthenticated ? <Navigate to={isAdmin ? "/admin" : "/home"} /> : <LoginPage />} />
-            <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
-            <Route path="/admin" element={<ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-            <Route path="/" element={<Navigate to={authState.isAuthenticated ? (isAdmin ? "/admin" : "/home") : "/login"} />} />
-            <Route path="/unity-game" element={<ProtectedRoute><UnityGame /></ProtectedRoute>} />
+            <Route
+              path="/login"
+              element={
+                authState.isAuthenticated
+                  ? <Navigate to={authState.userRole === 'administrador' ? "/admin" : "/home"} replace />
+                  : <LoginPage />
+              }
+            />
+            <Route
+              path="/admin/*"
+              element={
+                authState.isAuthenticated && authState.userRole === 'administrador'
+                  ? <AdminPage />
+                  : <Navigate to="/login" replace />
+              }
+            />
+            <Route
+              path="/"
+              element={
+                authState.isAuthenticated && authState.userRole !== 'administrador'
+                  ? <ProtectedLayout />
+                  : <Navigate to="/login" replace />
+              }
+            >
+              <Route index element={<Navigate to="/home" replace />} />
+              <Route path="home" element={<HomePage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="/unity-game" element={<UnityGame />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </Router>
