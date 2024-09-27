@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/login';
 import AdminPage from './pages/admin';
 import ProfilePage from './pages/ProfilePage/profile';
 import Welcome from './components/Welcome/Welcome';
+import UnityGame from './components/Unity';
 
 export const AuthContext = createContext(null);
 
@@ -60,6 +61,7 @@ function App() {
             <Route path="/admin" element={<ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
             <Route path="/" element={<Navigate to={authState.isAuthenticated ? (isAdmin ? "/admin" : "/home") : "/login"} />} />
+            <Route path="/unity-game" element={<ProtectedRoute><UnityGame /></ProtectedRoute>} />
           </Routes>
         </div>
       </Router>
