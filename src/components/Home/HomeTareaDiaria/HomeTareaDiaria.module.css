@@ -1,11 +1,21 @@
 .dailyTasksHeader {
     position: absolute;
-    left: 20px;
+    left: 0; /* Cambiado a 0 para comenzar desde el borde izquierdo */
     top: 200px;
     display: flex;
     justify-content: space-between;
-    width: 386px;
+    width: 100%; /* Hacer que abarque toda la pantalla */
+    padding: 0 20px; /* Agregar padding lateral para evitar que el contenido se pegue a los bordes */
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
     align-items: center;
+}
+
+/* Ajuste en pantallas más grandes */
+@media (min-width: 768px) {
+    .dailyTasksHeader {
+        left: 0; /* Asegúrate de que se mantenga en 0 */
+        top: 200px;
+    }
 }
 
 .dailyTasksTitle {
@@ -14,34 +24,38 @@
     font-weight: bold;
 }
 
-.viewMore {
-    font-size: 17.22px;
-    position: absolute;
-    right: -10px;
-    color: #FFFFFF;
-    text-decoration: none;
-    margin-right: 20px;
-    cursor: pointer;
-}
-
-.viewMore:hover {
-    text-decoration: underline;
-}
-
 .cardsContainer {
     position: absolute;
     top: 296px;
-    left: 20px;
+    left: 0; /* Cambiado a 0 para comenzar desde el borde izquierdo */
     display: flex;
-    gap: 30px;
-    width: 386px;
+    gap: 10px;
+    width: 100%; /* Hacer que abarque toda la pantalla */
+    overflow-x: auto; /* Habilitar scroll horizontal */
+    white-space: nowrap; /* Evita que las tarjetas se envuelvan */
+    padding: 10px 20px 10px 20px; /* Agregar padding lateral para evitar que el contenido se pegue a los bordes */
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    scrollbar-width: none; /* Oculta la barra de scroll en Firefox */
+}
+
+/* Ocultar la barra de scroll en navegadores basados en WebKit (Chrome, Safari, Edge) */
+.cardsContainer::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ajuste en pantallas más grandes */
+@media (min-width: 768px) {
+    .cardsContainer {
+        left: 0; /* Asegúrate de que se mantenga en 0 */
+        width: calc(100% - 40px); /* Ajustar el ancho para mostrar parcialmente la tercera carta */
+    }
 }
 
 .card {
     background-color: rgba(158, 161, 162, 0.14);
-    width: 178px;
+    min-width: 178px; /* Mantener el tamaño mínimo de las cartas */
     height: 150px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     color: white;

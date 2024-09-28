@@ -8,6 +8,7 @@ import Welcome from './components/Welcome/Welcome';
 import ProtectedLayout from './components/ProtectedLayout/index';
 import HomePage from './pages/HomePage/home';
 import ProfilePage from './pages/ProfilePage/profile';
+import NotificationsPage from './pages/NotificationsPage/notifications';
 import UnityGame from './components/Unity';
 
 export const AuthContext = createContext(null);
@@ -77,6 +78,7 @@ function App() {
               <Route index element={<Navigate to="/home" replace />} />
               <Route path="home" element={<HomePage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="notifications" element={<NotificationsPage />} />
               <Route path="/unity-game" element={<UnityGame />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />

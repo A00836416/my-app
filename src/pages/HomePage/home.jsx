@@ -5,7 +5,6 @@ import { AuthContext } from '../../App';
 import HomeHeader from '../../components/Home/HomeHeader/HomeHeader';
 import HomeTabBar from '../../components/Home/HomeTabBar/HomeTabBar';
 import HomeTareaDiaria from '../../components/Home/HomeTareaDiaria/HomeTareaDiaria';
-import HomeTareaSemanal from '../../components/Home/HomeTareaSemanal/HomeTareaSemanal';
 import styles from './HomePage.module.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -43,7 +42,6 @@ const HomePage = () => {
             <HomeHeader></HomeHeader>
             <HomeTabBar></HomeTabBar>
             <HomeTareaDiaria></HomeTareaDiaria>
-            <HomeTareaSemanal></HomeTareaSemanal>
         </div>
     );
 };

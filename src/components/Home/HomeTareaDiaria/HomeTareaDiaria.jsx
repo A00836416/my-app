@@ -4,8 +4,8 @@ import styles from './HomeTareaDiaria.module.css'; // Asegúrate de importar los
 const TareaDiaria = () => (
     <div>
         <div className={styles.dailyTasksHeader}>
-            <h2 className={styles.dailyTasksTitle}>Tareas diarias</h2>
-            <a href="#" className={styles.viewMore}>Ver más</a>
+            <h2 className={styles.dailyTasksTitle}>Tareas </h2>
+
         </div>
 
         {/* Contenedor de los cards */}
@@ -15,6 +15,12 @@ const TareaDiaria = () => (
             </div>
             <div className={styles.card}>
                 <p>Card 2</p>
+            </div>
+            <div className={styles.card}>
+                <p>Card 3</p>
+            </div>
+            <div className={styles.card}>
+                <p>Card 4</p>
             </div>
         </div>
     </div>

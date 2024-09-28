@@ -1,0 +1,35 @@
+.headerContainer {
+    position: absolute;
+    gap: 8px;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    display: flex;
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: center; /* Centra verticalmente los elementos */
+    padding: 0 20px; /* Agrega padding lateral para no pegar el contenido a los bordes */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+}
+
+.title {
+    font-size: 24px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Hacer que abarque toda la pantalla */
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    align-items: left;
+}
+
+.backButton {
+    font-size: 30px;
+    display: flex; /* Usar flex para alinear el icono y el texto */
+    align-items: center; 
+    color: white; 
+    background: none; 
+    border: none;
+    cursor: pointer;
+}
+
+

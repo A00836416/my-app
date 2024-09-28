@@ -7,9 +7,9 @@ const NavigationMenu = ({ currentPath }) => {
     const { isAuthenticated, userRole } = useContext(AuthContext);
 
     const menuItems = [
-        { path: '/home', label: 'Inicio', icon: '🏠' },
-        { path: '/profile', label: 'Perfil', icon: '👤' },
-        { path: '/unity-game', label: 'Oficina', icon: '🏢' },
+        { path: '/home', label: 'Inicio', icon: <i className="fas fa-home"></i> },
+        { path: '/leaderboard', label: 'Tabla', icon: <i className="fas fa-table"></i> },
+        { path: '/unity-game', label: 'Oficina', icon: <i className="fas fa-building"></i> },
 
     ];
 

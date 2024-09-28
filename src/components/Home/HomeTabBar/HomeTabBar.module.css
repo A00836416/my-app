@@ -1,16 +1,24 @@
 .smallSections {
     position: absolute;
     top: 120px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    width: 100%; 
     display: flex;
     gap: 40px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow-x: scroll;
+    scrollbar-width: none;
 }
 
-.inicio, .tareas, .beneficios {
+.smallSections::-webkit-scrollbar {
+    display: none; /* Para navegadores WebKit (Chrome, Safari) */
+}
+
+.tareas, .fase1, .fase2, .fase3, .fase4 {
     font-size: 17.22px;
     color: #8E8989;
-    flex: 1;
+    flex: 0 0 auto; /* Evita que los elementos se reduzcan y permite que el contenedor se expanda */
     background: none;
     box-shadow: none;
     padding: 10px;
