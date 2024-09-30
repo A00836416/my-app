@@ -5,10 +5,12 @@ import './App.css';
 import LoginPage from './pages/LoginPage/login';
 import AdminPage from './pages/admin';
 import Welcome from './components/Welcome/Welcome';
+import Leaderboard from './pages/LeaderboardPage/Leaderboard';
 import ProtectedLayout from './components/ProtectedLayout/index';
 import HomePage from './pages/HomePage/home';
 import ProfilePage from './pages/ProfilePage/profile';
 import UnityGame from './components/Unity';
+
 
 export const AuthContext = createContext(null);
 
@@ -50,6 +52,7 @@ function App() {
         <div className="app">
           <Routes>
             <Route path="/welcome" element={<Welcome />} />
+
             <Route
               path="/login"
               element={
@@ -78,8 +81,10 @@ function App() {
               <Route path="home" element={<HomePage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="/unity-game" element={<UnityGame />} />
+                <Route path="/leaderboard" element={<Leaderboard />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
+
           </Routes>
         </div>
       </Router>
