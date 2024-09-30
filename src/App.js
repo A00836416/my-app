@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/login';
 import AdminPage from './pages/admin';
 import ProfilePage from './pages/ProfilePage/profile';
 import Welcome from './components/Welcome/Welcome';
+import Leaderboard from './pages/LeaderboardPage/Leaderboard';
 
 export const AuthContext = createContext(null);
 
@@ -57,9 +58,11 @@ function App() {
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/login" element={authState.isAuthenticated ? <Navigate to={isAdmin ? "/admin" : "/home"} /> : <LoginPage />} />
             <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+            <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
             <Route path="/admin" element={<ProtectedRoute adminOnly={true}><AdminPage /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
             <Route path="/" element={<Navigate to={authState.isAuthenticated ? (isAdmin ? "/admin" : "/home") : "/login"} />} />
+
           </Routes>
         </div>
       </Router>

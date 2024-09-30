@@ -1,0 +1,18 @@
+.podiumContainer {
+    position: absolute;
+    top: 149px;
+    width: 370px;
+    height: 181px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.podium {
+    font-size: 20px;
+    text-align: center;
+}
+
