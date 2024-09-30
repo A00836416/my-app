@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './HomeHeader.module.css';
 import FotoPerfil from '../../Profile/ProfileHeader/img/cars.png';
 
-const HomeHeader = ({ user, goToLogoutPage }) => {
+const HomeHeader = ({ user }) => {
     return (
         <div className={styles.welcomeContainer}>
             <div className={styles.welcome}>
@@ -17,11 +17,9 @@ const HomeHeader = ({ user, goToLogoutPage }) => {
                 <Link to="/notifications" className={styles.notificationsButton}>
                     <i className="fas fa-bell"></i>
                 </Link>
-                <button onClick={goToLogoutPage} className={styles.ProfilePic}>
-                    <Link to="/profile" className={styles.ProfilePic}>
-                        <img src={FotoPerfil} alt="foto perfil" />
-                    </Link>
-                </button>
+                <Link to="/profile" className={styles.ProfilePic}>
+                    <img src={FotoPerfil} alt="foto perfil" />
+                </Link>
             </div>
         </div>
     );

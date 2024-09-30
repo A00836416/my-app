@@ -1,8 +1,10 @@
 .smallSections {
     position: absolute;
-    top: 120px;
+    top: 144px;
     left: 0;
     width: 100%; 
+    height: auto;
+    margin: 0;
     display: flex;
     gap: 40px;
     padding: 0 20px;
@@ -23,4 +25,9 @@
     box-shadow: none;
     padding: 10px;
     text-align: center;
+    margin: 0;
+}
+
+.p {
+    margin: 0;
 }

@@ -1,54 +1,42 @@
+.tasksWrapper {
+    position: absolute; /* Opción para posicionamiento normal en el flujo del documento */
+    top: 249.94px; /* Cambia este valor para ajustarlo a tu preferencia */
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
 .dailyTasksHeader {
-    position: absolute;
-    left: 0; /* Cambiado a 0 para comenzar desde el borde izquierdo */
-    top: 200px;
     display: flex;
     justify-content: space-between;
     width: 100%; /* Hacer que abarque toda la pantalla */
     padding: 0 20px; /* Agregar padding lateral para evitar que el contenido se pegue a los bordes */
     box-sizing: border-box; /* Incluye el padding en el ancho total */
-    align-items: center;
-}
-
-/* Ajuste en pantallas más grandes */
-@media (min-width: 768px) {
-    .dailyTasksHeader {
-        left: 0; /* Asegúrate de que se mantenga en 0 */
-        top: 200px;
-    }
+    margin: 0;
 }
 
 .dailyTasksTitle {
-    font-size: 22.38px;
+    font-size: 24px;
     color: #FFFFFF;
     font-weight: bold;
+    margin: 0;
 }
 
 .cardsContainer {
-    position: absolute;
-    top: 296px;
-    left: 0; /* Cambiado a 0 para comenzar desde el borde izquierdo */
     display: flex;
     gap: 10px;
     width: 100%; /* Hacer que abarque toda la pantalla */
     overflow-x: auto; /* Habilitar scroll horizontal */
     white-space: nowrap; /* Evita que las tarjetas se envuelvan */
-    padding: 10px 20px 10px 20px; /* Agregar padding lateral para evitar que el contenido se pegue a los bordes */
+    padding: 0px 20px; /* Agregar padding lateral para evitar que el contenido se pegue a los bordes */
     box-sizing: border-box; /* Incluye el padding en el ancho total */
-    scrollbar-width: none; /* Oculta la barra de scroll en Firefox */
+    scrollbar-width: none;
 }
 
-/* Ocultar la barra de scroll en navegadores basados en WebKit (Chrome, Safari, Edge) */
 .cardsContainer::-webkit-scrollbar {
     display: none;
-}
-
-/* Ajuste en pantallas más grandes */
-@media (min-width: 768px) {
-    .cardsContainer {
-        left: 0; /* Asegúrate de que se mantenga en 0 */
-        width: calc(100% - 40px); /* Ajustar el ancho para mostrar parcialmente la tercera carta */
-    }
 }
 
 .card {
@@ -62,8 +50,35 @@
     font-size: 16px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
 }
 
-.dailyTasksGroup {
-    margin-bottom: 40px;
+.activeCard {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 80%; /* Estado inicial: ancho 0 */
+    height: 55%; /* Estado inicial: alto 0 */
+    background-color: rgba(158, 161, 162, 1); 
+    z-index: 20; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: white; 
+    font-size: 24px; 
+    border-radius: 10px; 
+    opacity: 1; /* Estado inicial: opacidad 0 */
+    transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease; /* Suavizar transición */
+}
+
+
+/* Ajuste en pantallas más grandes */
+@media (min-width: 768px) {
+    .cardsContainer {
+        width: calc(100% - 20px); /* Ajustar el ancho para mostrar parcialmente la tercera carta */
+    }
+    .dailyTasksHeader {
+        top: 100px; /* Cambia este valor para mantenerlo alineado con la nueva posición del header */
+    }
 }
