@@ -1,25 +1,27 @@
 import React from 'react';
-import styles from './HomeHeader.module.css'; 
+import { Link } from 'react-router-dom';
+import styles from './HomeHeader.module.css';
+import FotoPerfil from '../../Profile/ProfileHeader/img/cars.png';
 
-const HomeHeader = ({ user, goToNotifications, goToLogoutPage }) => {
+const HomeHeader = ({ user }) => {
     return (
-            <div className={styles.welcomeContainer}>
-                <div className={styles.buttons}>
-                    <button onClick={goToNotifications} className={styles.notificationsButton}>
-                        <i className="fas fa-bell"></i>
-                    </button>
-                    <button onClick={goToLogoutPage} className={styles.perfilButton}>
-                        Perfil
-                    </button>
+        <div className={styles.welcomeContainer}>
+            <div className={styles.welcome}>
+                <h1>Bienvenido</h1>
+                <div className={styles.sucursalContainer}>
+                    <i className="fas fa-map-marker-alt"></i>
+                    <p className={styles.sucursal}>Sucursal</p>
                 </div>
-                <div className={styles.welcome}>
-                    <h1>Bienvenido</h1>
-                    <div className={styles.sucursalContainer}>
-                        <i className="fas fa-map-marker-alt"></i>
-                        <p className={styles.sucursal}>Sucursal</p>
-                    </div>
-                </div>
-             </div>
+            </div>
+            <div className={styles.buttons}>
+                <Link to="/notifications" className={styles.notificationsButton}>
+                    <i className="fas fa-bell"></i>
+                </Link>
+                <Link to="/profile" className={styles.ProfilePic}>
+                    <img src={FotoPerfil} alt="foto perfil" />
+                </Link>
+            </div>
+        </div>
     );
 };
 

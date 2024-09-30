@@ -5,7 +5,7 @@ import { AuthContext } from '../../App';
 import HomeHeader from '../../components/Home/HomeHeader/HomeHeader';
 import HomeTabBar from '../../components/Home/HomeTabBar/HomeTabBar';
 import HomeTareaDiaria from '../../components/Home/HomeTareaDiaria/HomeTareaDiaria';
-import HomeTareaSemanal from '../../components/Home/HomeTareaSemanal/HomeTareaSemanal';
+import HomeProgress from '../../components/Home/HomeProgress/HomeProgress';
 import styles from './HomePage.module.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -27,15 +27,6 @@ const HomePage = () => {
         fetchAuthStatus();
     }, [navigate, setIsAuthenticated]);
 
-    const goToLogoutPage = () => {
-        navigate('/logout');
-    };
-
-    const goToNotifications = () => {
-        // Aquí podrías definir qué hacer al hacer clic en el botón de notificaciones
-        console.log('Notificaciones');
-    };
-
     if (!user) return <div className={styles.loading}>Loading...</div>;
 
     return (
@@ -43,7 +34,7 @@ const HomePage = () => {
             <HomeHeader></HomeHeader>
             <HomeTabBar></HomeTabBar>
             <HomeTareaDiaria></HomeTareaDiaria>
-            <HomeTareaSemanal></HomeTareaSemanal>
+            <HomeProgress></HomeProgress>
         </div>
     );
 };

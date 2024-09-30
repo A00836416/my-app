@@ -1,0 +1,135 @@
+.progressContainer {
+    position: absolute;
+    top: 507.44px;
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
+.progressHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.progressTitle {
+    font-size: 24px;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 0;
+}
+
+.cardsContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    white-space: nowrap;
+    padding: 0px 20px;
+    box-sizing: border-box;
+}
+
+.card {
+    background-color: rgba(158, 161, 162, 0.14);
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.stagesContainer {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    justify-content:space-between;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    gap: 0; /* Asegúrate de que no haya un espacio residual */
+}
+
+.stageContainer {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    border: 2px solid #e0e0e0;
+    position: relative; /* Para permitir que el checkmark se posicione dentro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.completed {
+    background-color: #40c7b8;
+    border-color: #40c7b8;
+}
+
+.line {
+    flex-grow: 1;
+    width: 50px;
+    height: 4px;
+    background-color: #e0e0e0;
+    transition: background-color 0.3s ease-in-out;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+.completedLine {
+    background-color: #40c7b8;
+}
+
+.completed::after {
+    content: '✔'; /* Agrega el checkmark */
+    font-size: 12px; /* Ajusta el tamaño del checkmark */
+    color: white; /* Color del checkmark */
+    position: absolute; /* Posiciona el checkmark en el centro */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra el checkmark */
+}
+
+.stageContainer:last-child {
+    flex-grow: 0; /* Evita que crezca automáticamente */
+    margin-right: 0; /* Elimina cualquier margen a la derecha */
+    padding-right: 0; /* Asegúrate de que no haya padding en el último */
+}
+
+/* Ajuste para el último círculo */
+.stageContainer:last-child .line {
+    display: none; /* Quitar la línea después del último círculo */
+}
+
+/* Ajuste para evitar cualquier margen/padding extra en el último stageContainer */
+.stagesContainer:last-child {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.taskInfo {
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+}

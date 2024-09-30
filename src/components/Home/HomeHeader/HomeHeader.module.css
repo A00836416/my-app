@@ -1,91 +1,91 @@
 .welcomeContainer {
     position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 386px;
+    top: 56px;
+    left: 0;
+    width: 100%;
     height: 56px;
     display: flex;
     justify-content: space-between; /* Distribuye el espacio entre los elementos */
-    align-items: center; /* Centra verticalmente los elementos */
-    gap: 10px;
+    align-items: center;
+    padding: 0px 20px;
+    box-sizing: border-box; /* Incluye padding en el ancho total */
 }
 
 .welcome {
-    color: white;
-    font-size: 18.96px;
-    display: flex; /* Asegúrate de que el contenido dentro también esté en flexbox */
-    flex-direction: column; /* Cambia a columna si deseas apilarlos */
-    justify-content: center; /* Centra verticalmente */
+    flex-direction: column;
 }
 
 .welcome h1 {
     color: white;
-    font-size: 18.96px;
-}
-
-.sucursal {
-    font-size: 10.71px;
-    color: #8E8989;
-    margin-left: 5px;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0;
 }
 
 .sucursalContainer {
+    color: #8E8989;
+    gap: 8px;
     display: flex;
     align-items: center;
-    margin-top: 5px;
-    width: 97px;
-    height: 17.33px;
-    margin-top: 5px;
-    text-align: bottom;
 }
 
-.sucursalContainer i {
-    margin-right: 5px;
-    color: #8E8989;
-    width: 13px;
-    height: 17.33px;
-    font-size: 17.33px;
-    line-height: 17.33px;
-    display: inline-block;
-}
-
-.perfilButton {
-    padding: 10px 15px;
-    background-color: #2196F3;
-    right: 16px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    gap: 10px;
-}
-
-.perfilButton:hover {
-    background-color: #1976D2;
+.sucursal {
+    font-size: 14sp;
+    text-align: center;
+    margin: 0;
 }
 
 .notificationsButton {
-    padding: 0; /* Elimina el padding para que el icono no tenga caja */
-    background-color: transparent; /* Elimina el fondo */
-    border: none; /* Asegúrate de que no haya borde */
-    cursor: pointer;
+    font-size: 30px;
     color: white;
-    font-size: 30px; /* Aumenta el tamaño del icono (ajusta según sea necesario) */
-}
-
-.notificationsButton i {
-    font-size: 30px; /* Aumenta el tamaño del icono de la campana (ajusta según sea necesario) */
-    line-height: normal; /* Asegúrate de que la línea no afecte el tamaño */
+    padding: 0;
 }
 
 .buttons {
     display: flex;
     position: absolute;
-    right: 0px;
-    top: 0;
-    gap: 10px; /* Espacio entre botones si es necesario */
-    justify-content: center; /* Distribuye el espacio entre los elementos */
+    right: 20px;
+    gap: 24px;
     align-items: center;
+}
+
+/* Media queries para pantallas más grandes */
+@media (min-width: 768px) {
+    .perfilButton {
+        padding: 12px 18px; /* Ajusta el padding para botones más grandes */
+    }
+
+    .notificationsButton {
+        font-size: 36px; /* Aumenta el tamaño del icono para pantallas más grandes */
+    }
+}
+
+@media (min-width: 1024px) {
+    .welcomeContainer {
+        top: 60px; /* Ajusta la posición según sea necesario */
+    }
+
+    .buttons {
+        gap: 15px; /* Mayor espacio entre botones */
+    }
+}
+
+.ProfilePic {
+    width: 50px;
+    height: 50px;
+    background-color: #D9D9D9;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden; /* Asegura que la imagen no se desborde */
+    border: none;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.ProfilePic img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    border-radius: 50%;
 }
