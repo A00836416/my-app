@@ -4,8 +4,8 @@
     background-color: #D9D9D9;
     position:relative;
     border-radius: 50%;
-    right: 90px;
-    bottom: 35%;
+    right: 10px;
+    bottom: 33%;
 }
 
 .ProfilePic img{
@@ -75,3 +75,15 @@ p.Kian{
 
 }
 
+.goToHomebutton{
+    padding: 0;
+    background-color: transparent;
+    border: none; /* Asegúrate de que no haya borde */
+    cursor:pointer;
+    color: white;
+    font-size: 30px;
+    position: absolute;
+    bottom: 140px;
+    display: flex;
+    right: 140px;
+}

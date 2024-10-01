@@ -1,36 +1,72 @@
-.LogrosContainer{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .LogrosTitle{
     position: relative;
     display: flex;
     width: 100%;
-    align-items: center;
     justify-content: center;
-    top: 60px;
+    top: 65px;
+    right: 100px;
 }
 
-.LogrosTitle a{
+.LogrosTitle button{
     position: relative;
-    left: 130px;
+    left: 140px;
 }
 
 .LogrosTitle h2{
-    position: absolute;
-    right: 125px;
+    position: relative;
+    right: 50px;
 }
 
-.CardLogros{
+.CardLogrosContainer {
     position: absolute;
-    width: 340px;
-    height: 180px;
-    background-color: rgba(158, 161, 162, 0.14); /* Color con 14% de opacidad */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+    top: 565px;
+    width: 100%;
+    left: 10px;
+    padding: 0px 20px;
+    overflow: hidden;
+}
+
+.CardLogrosScroller {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.CardLogrosScroller::-webkit-scrollbar {
+    display: none;
+}
+
+.CardLogro {
+    min-width: 178px;
+    height: 150px;
+    background-color: rgba(158, 161, 162, 0.14);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     color: #FFFFFF;
-    top: 100px;
+    padding: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    
 }
+
+
+.expand-button{
+    text-decoration: none;
+    color: #9ca3af;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s ease;
+    font-size: 0.875rem;
+    width: 5rem; /* Fixed width */
+    text-align: right;
+    
+}
+
+.expand-button:hover {
+    color: #f3f4f6;
+  }

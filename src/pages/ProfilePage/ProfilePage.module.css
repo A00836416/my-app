@@ -13,3 +13,16 @@
     box-sizing: border-box;
     overflow: hidden;
 }
+
+
+
+@media (max-height:802px){
+    body{
+        overflow: hidden;
+        background-size: cover;
+        max-height: 100vh;
+    }
+}
+
+
+

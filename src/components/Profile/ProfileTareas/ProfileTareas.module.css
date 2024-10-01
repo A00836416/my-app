@@ -1,44 +1,99 @@
-.TareasContainer{
+.TareasContainer {
     position: absolute;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100vh; /* Altura total de la ventana */
+    height: auto;
 }
 
-.TareasTitle{
+.TareasTitle {
     position: relative;
     right: 40px;
     display: flex;
     width: 100%;
-    bottom: 195px;
+    bottom: 180px;
     align-items: center;
     justify-content: center;
 }
 
-.TareasTitle a{
+.TareasTitle button {
     position: relative;
     left: 80px;
 }
 
-h2{
+h2 {
     color: #FFFFFF;
-    font-size:larger;
+    font-size: larger;
 }
 
-a{
+.expand-button {
     text-decoration: none;
-    color: #FFFFFF;
+    color: #9ca3af;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s ease;
+    font-size: 0.875rem;
+    width: 5rem;
+    text-align: right;
 }
 
-.CardTarea{
+.expand-button:hover {
+    color: #f3f4f6;
+}
+
+.CardContenedor {
     position: absolute;
-    width: 340px;
-    height: 180px;
-    background-color: rgba(158, 161, 162, 0.14); /* Color con 14% de opacidad */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+    display: flex;
+    gap: 10px;
+    bottom: 5px;
+    left: 10px;
+    width:100%; /* Ajusta el ancho para considerar el padding */
+    overflow-x: auto; /* Habilitar scroll horizontal */
+    white-space: nowrap; /* Evita que las tarjetas se envuelvan */
+    padding: 0px 20px; /* Agregar padding lateral para evitar que el contenido se pegue a los bordes */
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    scrollbar-width: none;
+}
+
+
+.CardScroller {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+    padding-bottom: 15px; /* Espacio para la barra de desplazamiento */
+    
+}
+
+.CardScroller::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+.CardScroller::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+
+
+.CardTarea {
+    min-width: 178px;
+    height: 150px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(158, 161, 162, 0.14);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     color: #FFFFFF;
-    bottom: 48%;
+    font-size: 16px;
+    flex-shrink: 0; /* Evita que las tarjetas se encojan */
+}
+
+.CardTarea ul {
+    margin-bottom: 0.5rem;
 }
