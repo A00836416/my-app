@@ -45,6 +45,10 @@ const NotificationsPage = () => {
         <div className={styles.container}>
             <NotificationsHeader />
             <NotificationsList notifications={notifications} />
+    
+
+       
+            
         </div>
     );
 };

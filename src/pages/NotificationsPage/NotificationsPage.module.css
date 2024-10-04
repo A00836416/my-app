@@ -1,10 +1,5 @@
 .container {
-    background: linear-gradient(to bottom right,
-            #1E1C1D 0%,
-            #183232 25%,
-            #183433 50%,
-            #112928 75%,
-            #1B1A1C 100%);
+
     width: 100vw;
     height: 100vh;
     margin: 8;

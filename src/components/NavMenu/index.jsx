@@ -24,7 +24,7 @@ const NavigationMenu = ({ currentPath }) => {
                     <Link
                         key={item.path}
                         to={item.path}
-                        className={`menu-item ${currentPath === item.path ? 'active' : ''}`}
+                        className={`menu-item ${currentPath.startsWith(item.path) ? 'active' : ''}`}
                     >
                         <span className="icon">{item.icon}</span>
                         <span className="label">{item.label}</span>
