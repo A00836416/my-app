@@ -8,10 +8,11 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 const ProfilePage = () => {
     return(
-        <div className={styles.ProfileContainer}>
+        <div className={styles.container}>
             <ProfileHeader></ProfileHeader>
             <ProfileTareas></ProfileTareas>
             <ProfileLogros></ProfileLogros>
+      
         </div>
 
 

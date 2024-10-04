@@ -1,28 +1,12 @@
-.ProfileContainer {
-    background: linear-gradient(to bottom right, #1E1C1D, #183232, #183433, #112928, #1B1A1C);
+.container {
+    margin: 8;
+    padding: 0;
 
     width: 100vw;
     height: 100vh;
-    /* Usa height para ocupar toda la altura de la ventana */
-    /* Asegura que ocupe todo el ancho */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow: hidden;
+    justify-content: center;
+    position: relative;
 }
-
-
-
-@media (max-height:802px){
-    body{
-        overflow: hidden;
-        background-size: cover;
-        max-height: 100vh;
-    }
-}
-
-
-

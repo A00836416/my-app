@@ -11,11 +11,13 @@ const ProfileHeader = () => {
         navigate('/home'); // Redirige a la página de inicio
     };
     return(
-        <div className={styles.ProfilePic}>
+        <div className={styles.ProfileHeader}>
             <button className={styles.goToHomebutton} onClick={goToHome}>
-                <i className="fas fa-angle-left"></i>
-            </button>
-            <img src={FotoPerfil} alt="foto perfil" />
+                    <i className="fas fa-angle-left"></i>
+                </button>
+            <div className={styles.ProfilePic}>
+                <img src={FotoPerfil} alt="foto perfil" />
+            </div>
             <div className={styles.EmployeeLevel}>
                 <p className={styles.Name}>Zara Luna</p>
                 <p className={styles.Kian}>Kian</p>
@@ -24,8 +26,8 @@ const ProfileHeader = () => {
                 </div>
                 <p className={styles.Nivel}>Nivel 20</p>
             </div>
+            
         </div>
-        
     );
 };
 
