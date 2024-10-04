@@ -99,6 +99,12 @@ const TaskManagement = () => {
         }
     };
 
+    const forcedLightStyles = {
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        border: '1px solid #d9d9d9',
+    };
+
     return (
         <div>
             <h2>Gestión de Tareas</h2>
@@ -121,9 +127,20 @@ const TaskManagement = () => {
                     form={form}
                     layout="vertical"
                     onFinish={handleCreateTask}
+
                 >
-                    <Form.Item name="nombre" label="Nombre" rules={[{ required: true }]}>
-                        <Input />
+                    <Form.Item
+                        name="nombre"
+                        label={<span style={{ color: '#000000' }}>Nombre</span>}
+                        rules={[{ required: true, message: 'Por favor ingrese el nombre' }]}
+                    >
+                        <Input
+                            placeholder="Ingrese el nombre"
+                            style={{
+                                ...forcedLightStyles,
+                                '::placeholder': { color: '#888888' },
+                            }}
+                        />
                     </Form.Item>
                     <Form.Item name="descripcion" label="Descripción" rules={[{ required: true }]}>
                         <Input.TextArea />

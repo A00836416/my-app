@@ -71,6 +71,12 @@ const DepartmentManagement = () => {
         }
     };
 
+    const forcedLightStyles = {
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        border: '1px solid #d9d9d9',
+    };
+
     return (
         <div style={{ padding: '24px' }}>
             <h2>Gestión de Departamentos</h2>
@@ -104,7 +110,12 @@ const DepartmentManagement = () => {
                         label="Nombre"
                         rules={[{ required: true, message: 'Por favor ingrese el nombre del departamento' }]}
                     >
-                        <Input />
+                        <Input
+                            placeholder="Ingrese el nombre"
+                            style={{
+                                ...forcedLightStyles,
+                                '::placeholder': { color: '#888888' },
+                            }} />
                     </Form.Item>
                     <Form.Item
                         name="descripcion"

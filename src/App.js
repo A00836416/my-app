@@ -75,7 +75,7 @@ function App() {
               element={
                 authState.isAuthenticated && authState.userRole !== 'administrador'
                   ? <ProtectedLayout />
-                  : <Navigate to="/login" replace />
+                  : <Navigate to="/Welcome" replace />
               }
             >
               <Route index element={<Navigate to="/home" replace />} />
@@ -83,7 +83,7 @@ function App() {
               <Route path="profile" element={<ProfilePage />} />
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="/unity-game" element={<UnityGame />} />
-                <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
 

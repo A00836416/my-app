@@ -103,7 +103,7 @@ const AdminPage = () => {
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            <Sider width={200} theme="light" style={{ borderRight: '1px solid #f0f0f0' }}>
+            <Sider width={200} theme="light" style={{ borderRight: '1px solid #f0f0f0', height: '100vh', position: 'fixed', left: 0, overflowY: 'auto' }}>
                 <div style={{ padding: '16px', textAlign: 'center' }}>
                     <img style={{ height: '40px', marginBottom: '16px', objectFit: 'contain' }} src={logo} alt="Logo de la empresa" />
                 </div>
@@ -115,8 +115,18 @@ const AdminPage = () => {
                     onSelect={({ key }) => setCurrentView(key)}
                 />
             </Sider>
-            <Layout>
-                <Header style={{ background: '#fff', padding: '0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 1px 4px rgba(0,21,41,.08)' }}>
+            <Layout style={{ marginLeft: 200 }}>
+                <Header style={{
+                    background: '#fff',
+                    padding: '0 16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 1px 4px rgba(0,21,41,.08)',
+                    position: 'fixed',
+                    width: 'calc(100% - 200px)',
+                    zIndex: 2
+                }}>
                     <Title level={4} style={{ margin: 0 }}>
                         Panel de Administrador
                     </Title>
@@ -128,12 +138,26 @@ const AdminPage = () => {
                         </Button>
                     </div>
                 </Header>
-                <Content style={{ margin: '24px 16px', overflow: 'initial' }}>
-                    <Card style={{ borderRadius: '8px', boxShadow: '' }}>
+                <Content style={{
+                    margin: '64px 16px 0',
+                    padding: '24px',
+                    minHeight: 'calc(100vh - 64px)',
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Card style={{
+                        borderRadius: '8px',
+                        boxShadow: '0 1px 2px 0 rgba(0,0,0,0.03)',
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }}>
                         <Title level={4} style={{ marginBottom: '16px' }}>
                             {currentView.charAt(0).toUpperCase() + currentView.slice(1)}
                         </Title>
-                        {renderContent()}
+                        <div style={{ flex: 1, overflowY: 'auto' }}>
+                            {renderContent()}
+                        </div>
                     </Card>
                 </Content>
             </Layout>
