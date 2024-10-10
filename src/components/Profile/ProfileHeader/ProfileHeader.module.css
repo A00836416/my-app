@@ -6,8 +6,24 @@
     height: auto;
     justify-content: center;
     align-items: center;
-    bottom: 630px;
+    bottom: 610px;
 
+}
+
+.TabBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+
+.HomeTitle{
+    font-size: 24px;
+    color: white;
+    
 }
 
 .ProfilePic{
@@ -73,16 +89,19 @@ p.Kian{
 }
 
 .goToHomebutton{
-    position: absolute;
     padding: 0 20px;
     background-color: transparent;
     border: none; /* Asegúrate de que no haya borde */
     cursor:pointer;
     color: white;
     font-size: 30px;
-    margin-bottom: 33%;
-    margin-right: 80%;
-    
-    
-    
+}
+
+.LogOut{
+    padding: 0 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 30px;
 }

@@ -18,5 +18,5 @@
     flex-grow: 1;
     padding-bottom: 60px;
     /* Ajusta este valor según la altura de tu NavigationMenu */
-    overflow-y: auto;
+    overflow-y: hidden;
 }

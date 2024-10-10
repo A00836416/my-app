@@ -24,6 +24,7 @@ function App() {
     loading: true
   });
 
+
   useEffect(() => {
     const verifyAuth = async () => {
       try {

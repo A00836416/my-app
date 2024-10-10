@@ -5,8 +5,7 @@
     width: 100%;
     height: auto;
     justify-content: center;
-    gap: 5px;
-    top: 540px;
+    top: 560px;
 }
 
 .LogrosTitle{
@@ -49,7 +48,7 @@
 
 .CardLogrosScroller {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -66,7 +65,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     color: #FFFFFF;
-    padding: 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
