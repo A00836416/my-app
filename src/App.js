@@ -9,6 +9,7 @@ import Leaderboard from './pages/LeaderboardPage/Leaderboard';
 import ProtectedLayout from './components/ProtectedLayout/index';
 import HomePage from './pages/HomePage/home';
 import ProfilePage from './pages/ProfilePage/profile';
+import SettingsPage from './pages/SettingsPage/Settings';
 import NotificationsPage from './pages/NotificationsPage/notifications';
 import UnityGame from './components/Unity';
 
@@ -82,6 +83,7 @@ function App() {
               <Route index element={<Navigate to="/home" replace />} />
               <Route path="home" element={<HomePage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="settings" element={<SettingsPage />} />
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="/unity-game" element={<UnityGame />} />
               <Route path="/leaderboard" element={<Leaderboard />} />

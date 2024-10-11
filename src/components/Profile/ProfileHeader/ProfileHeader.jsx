@@ -1,14 +1,38 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../App';
 import styles from './ProfileHeader.module.css';
 import FotoPerfil from '../ProfileHeader/img/cars.png';
+import { logout, getUserInfo } from '../../../services/api';
+import { message } from 'antd';
+
 
 const ProfileHeader = () => {
     const { setAuthState } = useContext(AuthContext);
     const navigate = useNavigate(); // Inicializa el hook useNavigate
     const [profilePic, setProfilePic] = useState(FotoPerfil); // Estado para manejar la imagen de perfil
     const fileInputRef = React.useRef(null); // Referencia al input file
+
+    // New state for employee data
+    const [employeeData, setEmployeeData] = useState({
+        name: '',
+        level: 0,
+        progress: 0
+    });
+
+    // Simulated API call
+    useEffect(() => {
+        const fetchEmployeeData = async () => {
+    
+            const data = await getUserInfo();
+            
+            setEmployeeData(data);
+        };
+
+        fetchEmployeeData();
+    }, []);
+
+
 
     // Manejador de la imagen seleccionada
     const handleImageChange = (event) => {
@@ -28,15 +52,19 @@ const ProfileHeader = () => {
         navigate('/home'); // Redirige a la página de inicio
     };
 
-    const goLogin = () => {
-        setAuthState({
-            isAuthenticated: false,
-            userRole: null,
-            userId: null,
-            user: null,
-            loading: false
-          });
-        navigate('/login');
+    const handleLogout = async () => {
+        try {
+            await logout();
+            message.success('Sesión cerrada exitosamente');
+            setAuthState({ isAuthenticated: false, userRole: null, userId: null, user: null });
+            navigate('/login');
+        } catch (error) {
+            message.error('Error al cerrar sesión');
+        }
+    };
+
+    const goToSettings = () => {
+        navigate('/settings');
     };
 
     return (
@@ -46,8 +74,8 @@ const ProfileHeader = () => {
                     <i className="fas fa-angle-left"></i>
                 </button>
                 <h1 className={styles.HomeTitle}>Profile</h1>
-                <button className={styles.LogOut} onClick={goLogin}>
-                    <i className="fa-solid fa-arrow-right-from-bracket"></i>
+                <button className={styles.Settings} onClick={goToSettings}>
+                    <i className="fa-solid fa-gear"></i>
                 </button>
             </div>
             <div className={styles.ProfilePic} onClick={handleProfilePicClick}>
@@ -63,12 +91,12 @@ const ProfileHeader = () => {
                 />
             </div>
             <div className={styles.EmployeeLevel}>
-                <p className={styles.Name}>Zara Luna</p>
+                <p className={styles.Name}>{employeeData.userName}</p>
                 <p className={styles.Kian}>Kian</p>
                 <div className={styles.ProgressBar}>
-                    <div className={styles.Progress}></div>
+                    <div className={styles.Progress} style={{ width: `${employeeData.experienciaTotal}%` }}></div>
                 </div>
-                <p className={styles.Nivel}>Nivel 20</p>
+                <p className={styles.Nivel}>Nivel {employeeData.numeroNivel}</p>
             </div>
         </div>
     );
