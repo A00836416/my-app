@@ -17,6 +17,17 @@ export const employeeService = {
         }
     },
 
+    
+    getTaskByEmployee: async () => {
+        try {
+            const response = await axios.get(`${API_URL}/tareas/empleado`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching employees:', error);
+            throw error;
+        }
+    },
+
     addEmployee: async (employeeData) => {
         try {
             const response = await axios.post(`${API_URL}/empleados/crear-usuario-empleado`, employeeData);
