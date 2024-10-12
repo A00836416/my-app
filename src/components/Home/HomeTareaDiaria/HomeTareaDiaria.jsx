@@ -1,13 +1,39 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from './HomeTareaDiaria.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProgressChart from './ProgressChart';
+import { taskService } from '../../../services/taskService';
+import { employeeService } from '../../../services/employeeService';
 
-const HomeTareaDiaria = ({ tareas }) => {
+const HomeTareaDiaria = () => {
+    const [tareas, setTareas] = useState([]);
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+    const [isUpdating, setIsUpdating] = useState(false);
     const [activeCard, setActiveCard] = useState(null);
     const [selectedFase, setSelectedFase] = useState(1);
     const activeCardRef = useRef(null);
     const fasesDesbloqueadas = [0, 1, 2, 3, 4];
+
+    const fetchTareas = useCallback(async (isInitial = false) => {
+        try {
+            if (isInitial) {
+                setIsInitialLoading(true);
+            } else {
+                setIsUpdating(true);
+            }
+            const tasksData = await employeeService.getTaskByEmployee();
+            setTareas(tasksData);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        } finally {
+            setIsInitialLoading(false);
+            setIsUpdating(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchTareas(true);
+    }, [fetchTareas]);
 
     const tareasFiltradas = tareas.filter((tarea) => tarea.nivel.numero === selectedFase);
 
@@ -33,29 +59,73 @@ const HomeTareaDiaria = ({ tareas }) => {
         return tarea.progresoEmpleado.estado;
     };
 
+    const handleStartTask = async (tarea) => {
+        try {
+            const response = await taskService.startTask(tarea.tareaID);
+            if (response.status === 200) {
+                await fetchTareas();
+
+            } else {
+                console.error('Failed to start task');
+            }
+        } catch (error) {
+            console.error('Error starting task:', error);
+        }
+    };
+
+    const handleCompleteTask = async (tarea) => {
+        try {
+            const response = await taskService.completeTask(tarea.tareaID);
+            if (response.status === 200) {
+                await fetchTareas();
+                setActiveCard(null);
+            } else {
+                console.error('Failed to complete task');
+            }
+        } catch (error) {
+            console.error('Error completing task:', error);
+        }
+    };
+
+    const handleRetryTask = async (tarea) => {
+        try {
+            const response = await taskService.retryTask(tarea.tareaID);
+            if (response.status === 200) {
+                await fetchTareas();
+                setActiveCard(null);
+            } else {
+                console.error('Failed to retry task');
+            }
+        } catch (error) {
+            console.error('Error retrying task:', error);
+        }
+    };
+
     const renderTaskButton = (tarea) => {
         const status = getTaskStatus(tarea);
         switch (status) {
             case 'Not Started':
-                return <button className={styles.startButton}>Empezar</button>;
+                return <button onClick={() => handleStartTask(tarea)} className={styles.startButton}>Empezar</button>;
             case 'In Progress':
-                return <button className={styles.completeButton}>Terminar</button>;
+                return <button onClick={() => handleCompleteTask(tarea)} className={styles.completeButton}>Terminar</button>;
             case 'Completed':
-            case 'Verified':
                 return <span className={styles.completedText}>Tarea Completada</span>;
+            case 'Verified':
+                return <span className={styles.completedText}>Tarea Verificada</span>;
             case 'Rejected':
-                return <button className={styles.retryButton}>Reintentar</button>;
+                return <button onClick={() => handleRetryTask(tarea)} className={styles.retryButton}>Reintentar</button>;
             default:
                 return null;
         }
     };
+
+    if (isInitialLoading) return <div className={styles.loading}>Cargando tareas...</div>;
 
     return (
         <div className={styles.tasksWrapper}>
             <div className={styles.dailyTasksHeader}>
                 <h2 className={styles.dailyTasksTitle}>Tareas</h2>
             </div>
-
 
             <div className={styles.smallSections}>
                 {fasesDesbloqueadas.map((fase) => (
@@ -69,14 +139,12 @@ const HomeTareaDiaria = ({ tareas }) => {
                 ))}
             </div>
 
-
-
             <div className={styles.cardsContainer}>
-                <ProgressChart tareas={tareasFiltradas} />
+                <ProgressChart tareas={tareas} />
+                {isUpdating && <div className={styles.updatingOverlay}>Actualizando...</div>}
                 {tareasFiltradas.length === 0 ? (
                     <p className={styles.noTasksMessage}>No hay tareas para esta fase</p>
                 ) : (
-
                     tareasFiltradas.map((tarea, index) => (
                         <motion.div
                             key={tarea.tareaID}
