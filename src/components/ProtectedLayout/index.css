@@ -1,5 +1,5 @@
 .employee-layout {
-   
+
     min-height: 100vh;
     background-size: cover;
 
@@ -7,9 +7,9 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-  
+
     position: relative;
-   
+
     background: linear-gradient(to bottom right, #1E1C1D, #183232, #183433, #112928, #1B1A1C);
 
 }
@@ -19,4 +19,9 @@
     padding-bottom: 60px;
     /* Ajusta este valor según la altura de tu NavigationMenu */
     overflow-y: auto;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }

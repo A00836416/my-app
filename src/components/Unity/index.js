@@ -49,11 +49,10 @@ const UnityGame = () => {
 
     return (
         <div>
-            <h2>Unity Game</h2>
             <iframe
                 title="Unity Game"
                 src="http://localhost:3002/unity"
-                style={{ width: '100%', height: '600px', border: 'none' }}
+                style={{ width: '100%', height: '100vh', border: 'none' }}
             ></iframe>
         </div>
     );
