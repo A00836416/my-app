@@ -1,23 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './HomeTareaDiaria.module.css';
-import { employeeService } from '../../../services/employeeService';
-import { motion } from 'framer-motion'; // Importar Framer Motion
+import { motion, AnimatePresence } from 'framer-motion';
+import ProgressChart from './ProgressChart';
 
-const TareaDiaria = () => {
+const HomeTareaDiaria = ({ tareas }) => {
     const [activeCard, setActiveCard] = useState(null);
     const [selectedFase, setSelectedFase] = useState(1);
-    const [tareas, setTareas] = useState([]);
-    const [loading, setLoading] = useState(true);
     const activeCardRef = useRef(null);
-    const fasesDesbloqueadas = [1, 2]; 
+    const fasesDesbloqueadas = [0, 1, 2, 3, 4];
 
     const tareasFiltradas = tareas.filter((tarea) => tarea.nivel.numero === selectedFase);
 
-    // Estado para el progreso de las tareas
-    const [tareasEnProgreso, setTareasEnProgreso] = useState({});
-
     const handleCardClick = (cardIndex) => {
-        setActiveCard(activeCard === cardIndex ? null : cardIndex); // Toggle card visibility
+        setActiveCard(activeCard === cardIndex ? null : cardIndex);
     };
 
     const handleOutsideClick = (event) => {
@@ -33,114 +28,100 @@ const TareaDiaria = () => {
         };
     }, []);
 
-    useEffect(() => {
-        const fetchTareas = async () => {
-            setLoading(true);
-            try {
-                const response = await employeeService.getTaskByEmployee();
-                setTareas(response);
-            } catch (error) {
-                console.error('Error al obtener las tareas:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchTareas();
-    }, []);
-
-    // Función para iniciar una tarea
-    const startTask = (tareaId) => {
-        setTareasEnProgreso((prev) => ({
-            ...prev,
-            [tareaId]: 'in progress' // Cambia el estado a 'in progress'
-        }));
+    const getTaskStatus = (tarea) => {
+        if (!tarea.progresoEmpleado) return 'Not Started';
+        return tarea.progresoEmpleado.estado;
     };
 
-    // Función para terminar una tarea
-    const completeTask = (tareaId) => {
-        setTareasEnProgreso((prev) => ({
-            ...prev,
-            [tareaId]: 'completed' // Cambia el estado a 'completed'
-        }));
+    const renderTaskButton = (tarea) => {
+        const status = getTaskStatus(tarea);
+        switch (status) {
+            case 'Not Started':
+                return <button className={styles.startButton}>Empezar</button>;
+            case 'In Progress':
+                return <button className={styles.completeButton}>Terminar</button>;
+            case 'Completed':
+            case 'Verified':
+                return <span className={styles.completedText}>Tarea Completada</span>;
+            case 'Rejected':
+                return <button className={styles.retryButton}>Reintentar</button>;
+            default:
+                return null;
+        }
     };
 
     return (
-        <>
+        <div className={styles.tasksWrapper}>
+            <div className={styles.dailyTasksHeader}>
+                <h2 className={styles.dailyTasksTitle}>Tareas</h2>
+            </div>
+
+
             <div className={styles.smallSections}>
-                {Array.from({ length: 5 }, (_, i) => (
+                {fasesDesbloqueadas.map((fase) => (
                     <button
-                        key={i}
-                        className={`${selectedFase === i ? styles.activeTab : ''} ${fasesDesbloqueadas.includes(i) ? '' : styles.bloqueadaTab}`}
-                        onClick={() => fasesDesbloqueadas.includes(i) && setSelectedFase(i)}
-                        disabled={!fasesDesbloqueadas.includes(i)}
+                        key={fase}
+                        className={`${styles.faseButton} ${selectedFase === fase ? styles.activeTab : ''}`}
+                        onClick={() => setSelectedFase(fase)}
                     >
-                        Fase {i}
+                        Fase {fase}
                     </button>
                 ))}
             </div>
-            <div className={`${styles.tasksWrapper} ${activeCard !== null ? 'blurBackground' : ''}`}>
-                <div className={styles.dailyTasksHeader}>
-                    <h2 className={styles.dailyTasksTitle}>Tareas de la fase {selectedFase}</h2>
-                </div>
-                {loading ? (
-                    <p>Cargando tareas...</p>
+
+
+
+            <div className={styles.cardsContainer}>
+                <ProgressChart tareas={tareasFiltradas} />
+                {tareasFiltradas.length === 0 ? (
+                    <p className={styles.noTasksMessage}>No hay tareas para esta fase</p>
                 ) : (
-                    <div className={styles.cardsContainer}>
-                        {tareasFiltradas.length === 0 ? (
-                            <p>No hay tareas para esta fase</p>
-                        ) : (
-                            tareasFiltradas.map((tarea, index) => (
-                                <div
-                                    key={tarea.id}
-                                    className={`${styles.card} ${activeCard === index ? styles.activeCard : ''}`}
-                                    onClick={() => handleCardClick(index)}
-                                >
-                                    <div className={styles.cardContent}>
-                                        <h3>{tarea.nombreTarea}</h3>
-                                        <p>{tarea.descripcionTarea}</p>
-                                        <p>{tarea.dimension.nombre}</p>
-                                    </div>
-                                </div>
-                            ))
-                        )}
-                        {activeCard !== null && (
-                            <motion.div
-                                ref={activeCardRef}
-                                className={`${styles.card} ${styles.activeCard}`}
-                                initial={{ scale: 0 }} // Estado inicial
-                                animate={{ scale: 1 }} // Estado final
-                                exit={{ scale: 0 }} // Estado al salir
-                                transition={{ duration: 0.5 }} // Duración de la animación de salida aumentada
-                            >
-                                <div className={styles.cardContent}>
-                                    <h3>{tareasFiltradas[activeCard].nombreTarea}</h3>
-                                    <p>{tareasFiltradas[activeCard].descripcionTarea}</p>
-                                    <p2>{tareasFiltradas[activeCard].dimension.nombre}</p2>
-                                    
-                                    {tareasEnProgreso[tareasFiltradas[activeCard].id] !== 'in progress' ? (
-                                        <button
-                                            onClick={() => startTask(tareasFiltradas[activeCard].id)}
-                                            className={styles.startButton}
-                                        >
-                                            Empezar
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={() => completeTask(tareasFiltradas[activeCard].id)}
-                                            className={styles.completeButton}
-                                        >
-                                            Terminar
-                                        </button>
-                                    )}
-                                </div>
-                            </motion.div>
-                        )}
-                    </div>
+
+                    tareasFiltradas.map((tarea, index) => (
+                        <motion.div
+                            key={tarea.tareaID}
+                            className={styles.card}
+                            onClick={() => handleCardClick(index)}
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            <h3>{tarea.nombreTarea}</h3>
+                            <p>{tarea.descripcionTarea}</p>
+                            <p className={styles.dimensionName}>{tarea.dimension.nombre}</p>
+                            <p className={styles.taskStatus}>Estado: {getTaskStatus(tarea)}</p>
+                        </motion.div>
+                    ))
                 )}
             </div>
-        </>
+            <AnimatePresence>
+                {activeCard !== null && (
+                    <motion.div
+                        className={styles.activeCardOverlay}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={handleOutsideClick}
+                    >
+                        <motion.div
+                            className={styles.activeCard}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.3 }}
+                            ref={activeCardRef}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h3>{tareasFiltradas[activeCard].nombreTarea}</h3>
+                            <p>{tareasFiltradas[activeCard].descripcionTarea}</p>
+                            <p className={styles.dimensionName}>{tareasFiltradas[activeCard].dimension.nombre}</p>
+                            <p className={styles.taskStatus}>Estado: {getTaskStatus(tareasFiltradas[activeCard])}</p>
+                            {renderTaskButton(tareasFiltradas[activeCard])}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     );
 };
 
-export default TareaDiaria;
+export default HomeTareaDiaria;

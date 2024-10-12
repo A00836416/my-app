@@ -1,0 +1,40 @@
+.chartContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.barContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.barLabel {
+    width: 100px;
+    text-align: right;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.barWrapper {
+    flex-grow: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 20px;
+    background-color: #4CAF50;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5px;
+    font-size: 12px;
+    color: #ffffff;
+    transition: width 0.3s ease;
+}
