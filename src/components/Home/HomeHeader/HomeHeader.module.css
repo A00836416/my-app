@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-between; /* Distribuye el espacio entre los elementos */
     align-items: center;
-    padding: 0px 20px;
+    padding: 0px 24px;
     box-sizing: border-box; /* Incluye padding en el ancho total */
 }
 
@@ -45,7 +45,7 @@
 .buttons {
     display: flex;
     position: absolute;
-    right: 20px;
+    right: 24px;
     gap: 24px;
     align-items: center;
 }

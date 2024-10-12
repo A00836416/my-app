@@ -17,17 +17,37 @@
     display: none; /* Para navegadores WebKit (Chrome, Safari) */
 }
 
-.tareas, .fase1, .fase2, .fase3, .fase4 {
+.fase {
     font-size: 17.22px;
     color: #8E8989;
-    flex: 0 0 auto; /* Evita que los elementos se reduzcan y permite que el contenedor se expanda */
-    background: none;
-    box-shadow: none;
-    padding: 10px;
+    background: none; /* Elimina el fondo del botón */
+    border: none; /* Elimina el borde del botón */
+    box-shadow: none; /* Elimina cualquier sombra */
+    padding: 0; /* Elimina el padding */
     text-align: center;
     margin: 0;
+    cursor: pointer; /* Cambia el cursor a pointer para indicar que es clicable */
+    flex: 0 0 auto;
 }
 
 .p {
     margin: 0;
+}
+
+.locked {
+    opacity: 0.5;
+    pointer-events: none;
+    background: none;
+}
+
+
+.activeTab {
+    color: #d0d0f0;
+    background: none;
+}
+
+.lockedTab {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: none;
 }

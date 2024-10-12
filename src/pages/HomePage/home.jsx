@@ -32,7 +32,6 @@ const HomePage = () => {
     return (
         <div className={styles.container}>
             <HomeHeader></HomeHeader>
-            <HomeTabBar></HomeTabBar>
             <HomeTareaDiaria></HomeTareaDiaria>
             <HomeProgress></HomeProgress>
         </div>
