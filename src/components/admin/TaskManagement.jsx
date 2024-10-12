@@ -6,14 +6,13 @@ const { Option } = Select;
 
 const TaskManagement = () => {
     const [tasks, setTasks] = useState([]);
-    const [employees, setEmployees] = useState([]);
+
     const [loading, setLoading] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [form] = Form.useForm();
 
     useEffect(() => {
         fetchTasks();
-        fetchEmployees();
     }, []);
 
     const fetchTasks = async () => {
@@ -28,14 +27,6 @@ const TaskManagement = () => {
         }
     };
 
-    const fetchEmployees = async () => {
-        try {
-            const response = await axios.get('http://localhost:3002/api/empleados');
-            setEmployees(response.data);
-        } catch (error) {
-            message.error('Error al cargar los empleados');
-        }
-    };
 
     const columns = [
         {
@@ -88,8 +79,7 @@ const TaskManagement = () => {
 
     const handleCreateTask = async (values) => {
         try {
-            const { empleadosIDs, ...taskData } = values;
-            await axios.post('http://localhost:3002/api/tareas', { ...taskData, empleadosIDs });
+            await axios.post('http://localhost:3002/api/tareas', values);
             message.success('Tarea creada exitosamente');
             setIsModalVisible(false);
             form.resetFields();
@@ -98,6 +88,7 @@ const TaskManagement = () => {
             message.error('Error al crear la tarea');
         }
     };
+
 
     const forcedLightStyles = {
         backgroundColor: '#ffffff',
@@ -157,7 +148,7 @@ const TaskManagement = () => {
                     <Form.Item name="esObligatoria" label="Es Obligatoria" valuePropName="checked">
                         <Switch />
                     </Form.Item>
-                    <Form.Item name="empleadosIDs" label="Asignar a Empleados">
+                    {/* <Form.Item name="empleadosIDs" label="Asignar a Empleados">
                         <Select mode="multiple" placeholder="Seleccione empleados">
                             {employees.map(emp => (
                                 <Option key={emp.empleadoID} value={emp.empleadoID}>
@@ -165,7 +156,7 @@ const TaskManagement = () => {
                                 </Option>
                             ))}
                         </Select>
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
                             Crear Tarea
