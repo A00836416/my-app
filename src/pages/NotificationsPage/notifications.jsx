@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 const NotificationsPage = () => {
     const [user, setUser] = useState(null);
-    const [notifications, setNotifications] = useState([]);
+    const [groupedNotifications, setGroupedNotifications] = useState({});
     const navigate = useNavigate();
     const { setIsAuthenticated } = useContext(AuthContext);
 
@@ -18,7 +18,6 @@ const NotificationsPage = () => {
             try {
                 const userData = await checkAuthStatus();
                 setUser(userData);
-                // Aquí puedes cargar las notificaciones del usuario
                 loadNotifications(userData.id);
             } catch (error) {
                 setIsAuthenticated(false);
@@ -29,14 +28,50 @@ const NotificationsPage = () => {
     }, [navigate, setIsAuthenticated]);
 
     const loadNotifications = async (userId) => {
-        // Simulación de una llamada a la API para obtener notificaciones
-        // Aquí deberías hacer la llamada real a tu API
         const mockNotifications = [
-            { id: 1, message: 'Tienes una nueva tarea asignada.' },
-            { id: 2, message: 'Tu reunión comienza en 15 minutos.' },
-            { id: 3, message: 'Nuevo comentario en tu tarea.' },
+            { id: 1, title: 'Nueva tarea asignada', description: 'Se te ha asignado una nueva tarea para el proyecto X.', date: new Date() },
+            { id: 2, title: 'Recordatorio de reunión', description: 'Tu reunión con el equipo comienza en 15 minutos.', date: new Date() },
+            { id: 3, title: 'Comentario en tu tarea', description: 'Alguien ha comentado en tu tarea.', date: new Date(Date.now() - 86400000) },
+            { id: 4, title: 'Documento revisado', description: 'La revisión del documento ha sido completada.', date: new Date(Date.now() - 86400000) },
+            { id: 5, title: 'Actualización de software', description: 'Hay una nueva actualización de software disponible.', date: new Date(Date.now() - 86400000 * 2) },
+            { id: 6, title: 'Recordatorio de pago', description: 'Recuerda realizar el pago de tus servicios.', date: new Date(Date.now() - 86400000 * 3) },
+            { id: 7, title: 'Solicitud de conexión', description: 'Has recibido una nueva solicitud de conexión.', date: new Date(Date.now() - 86400000 * 6) },
+            { id: 8, title: 'Documento enviado', description: 'Se ha enviado el documento para su revisión.', date: new Date(Date.now() - 86400000 * 10) },
         ];
-        setNotifications(mockNotifications);
+
+        setGroupedNotifications(groupNotificationsByDate(mockNotifications));
+    };
+
+    const groupNotificationsByDate = (notifications) => {
+        const grouped = {
+            hoy: [],
+            ayer: [],
+            ultimos7Dias: [],
+            ultimoMes: [],
+        };
+
+        notifications.forEach(notification => {
+            const notificationDate = notification.date;
+            const today = new Date();
+            const yesterday = new Date();
+            yesterday.setDate(today.getDate() - 1);
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(today.getDate() - 7);
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(today.getDate() - 30);
+
+            if (notificationDate.toDateString() === today.toDateString()) {
+                grouped.hoy.push(notification);
+            } else if (notificationDate.toDateString() === yesterday.toDateString()) {
+                grouped.ayer.push(notification);
+            } else if (notificationDate >= sevenDaysAgo) {
+                grouped.ultimos7Dias.push(notification);
+            } else if (notificationDate >= thirtyDaysAgo) {
+                grouped.ultimoMes.push(notification);
+            }
+        });
+
+        return grouped;
     };
 
     if (!user) return <div className={styles.loading}>Loading...</div>;
@@ -44,11 +79,7 @@ const NotificationsPage = () => {
     return (
         <div className={styles.container}>
             <NotificationsHeader />
-            <NotificationsList notifications={notifications} />
-    
-
-       
-            
+            <NotificationsList groupedNotifications={groupedNotifications} />
         </div>
     );
 };

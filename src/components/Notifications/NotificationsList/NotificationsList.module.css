@@ -1,0 +1,68 @@
+.notificationsContainer {
+    padding: 16px;
+    max-height: calc(100vh - 240px); /* Ajuste basado en la parte superior */
+    overflow-y: auto; /* Habilitar desplazamiento vertical */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    box-sizing: border-box;
+    position: relative;
+    top: 0; /* Se ajusta desde la parte superior */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px; /* Ajustar según la altura deseada del overlay */
+    background: rgba(0, 0, 0, 0.5); /* Color de fondo del overlay */
+    transition: opacity 0.3s ease; /* Transición suave para el efecto de fade */
+    pointer-events: none; /* Evitar que el overlay interfiera con los eventos de scroll */
+}
+
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: white;
+    text-align: left;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Ocupa el ancho completo para facilitar el alineado */
+}
+
+li {
+    margin: 4px 0;
+    padding: 16px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.notificationTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.notificationDescription {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.notificationTime {
+    font-size: 12px;
+    color: #999;
+    margin-top: 8px;
+}
