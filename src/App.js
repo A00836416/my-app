@@ -12,7 +12,6 @@ import ProfilePage from './pages/ProfilePage/profile';
 import NotificationsPage from './pages/NotificationsPage/notifications';
 import UnityGame from './components/Unity';
 
-
 export const AuthContext = createContext(null);
 
 function App() {
@@ -86,7 +85,6 @@ function App() {
               <Route path="/leaderboard" element={<Leaderboard />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
-
           </Routes>
         </div>
       </Router>

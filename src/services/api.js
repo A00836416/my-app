@@ -34,7 +34,7 @@ export const checkAuthStatus = async () => {
 
 export const getUserInfo = async (userId) => {
     try {
-        const response = await axios.get(`${API_URL}/user/${userId}`);
+        const response = await axios.get(`${API_URL}/user/`);
         return response.data;
     } catch (error) {
         console.error("Error al obtener la información del usuario:", error);

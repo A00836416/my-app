@@ -17,7 +17,6 @@ export const employeeService = {
         }
     },
 
-    
     getTaskByEmployee: async () => {
         try {
             const response = await axios.get(`${API_URL}/tareas/empleado`);
@@ -38,5 +37,37 @@ export const employeeService = {
         }
     },
 
+    getEmployeeDetails: async (employeeId) => {
+        try {
+            const response = await axios.get(`${API_URL}/empleados/${employeeId}/detalles`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching employee details:', error);
+            throw error;
+        }
+
+    },
+
+    getEmployeeTasks: async (employeeId) => {
+        try {
+            const response = await axios.get(`${API_URL}/empleados/${employeeId}/tareas-en-progreso`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching employee tasks:', error);
+            throw error;
+        }
+    },
+
+    verifyTask: async (progresoID) => {
+        try {
+            const response = await axios.post(`${API_URL}/tareas/verificar`, {
+                progresoID: progresoID
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error verifying task:', error);
+            throw error;
+        }
+    },
     // Añade más métodos según sea necesario
 };
