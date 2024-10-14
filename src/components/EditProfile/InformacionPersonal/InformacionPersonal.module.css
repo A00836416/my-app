@@ -120,7 +120,7 @@
     color: white;
     align-items: flex-start;
     padding: 15px 15px;
-    gap: 10px;
+    gap: 5px;
     border-radius: 8px;
 }
 
@@ -138,6 +138,7 @@
     padding: 10px 20px;
     cursor: pointer;
     flex: 1;
+    transition: background-color 0.3s ease;
 }
 
 .generoOption input[type="radio"] {
@@ -150,22 +151,37 @@
     border: 2px solid #555;
     border-radius: 50%;
     margin-right: 10px;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
+    transition: border-color 0.3s ease;
 }
 
+.checkIcon {
+    color: transparent;
+    font-size: 12px;
+    transition: color 0.3s ease;
+}
+
+/* Estilos para cuando el botón está seleccionado */
 .generoOption input[type="radio"]:checked + .customRadio {
     border-color: #3498db;
 }
 
-.generoOption input[type="radio"]:checked + .customRadio::after {
-    content: '';
-    width: 12px;
-    height: 12px;
+.generoOption input[type="radio"]:checked + .customRadio .checkIcon {
+    color: white;
+}
+
+
+
+.generoOption input[type="radio"]:checked + .customRadio {
     background-color: #3498db;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+
+
+/* Cambiar el fondo de toda la opción cuando está seleccionada */
+.generoOption input[type="radio"]:checked ~ * {
+    background-color: #3498db;
 }
