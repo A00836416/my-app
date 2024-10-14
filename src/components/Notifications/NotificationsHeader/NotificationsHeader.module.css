@@ -6,10 +6,10 @@
     width: 100%;
     height: 56px;
     display: flex;
-    justify-content: space-between; /* Distribuye el espacio entre los elementos */
-    align-items: center; /* Centra verticalmente los elementos */
-    padding: 0 20px; /* Agrega padding lateral para no pegar el contenido a los bordes */
-    box-sizing: border-box; /* Incluye padding en el ancho total */
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 20px; 
+    box-sizing: border-box; 
 }
 
 .title {
@@ -17,19 +17,17 @@
     color: #fff;
     display: flex;
     justify-content: space-between;
-    width: 100%; /* Hacer que abarque toda la pantalla */
-    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    width: 100%; 
+    box-sizing: border-box; 
     align-items: left;
 }
 
 .backButton {
     font-size: 30px;
-    display: flex; /* Usar flex para alinear el icono y el texto */
+    display: flex; 
     align-items: center; 
     color: white; 
     background: none; 
     border: none;
     cursor: pointer;
 }
-
-
