@@ -1,0 +1,33 @@
+.InformacionPersonal{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    justify-content: center;
+    bottom: 610px;
+}
+
+.InformacionPersonal h2{
+    font-size: 20px;
+}
+
+.Title{
+    display: flex;
+    color: white;
+}
+
+.Nombre{
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.InputNombre{
+    width: 94%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #ccc;
+}

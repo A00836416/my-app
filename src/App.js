@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage/profile';
 import SettingsPage from './pages/SettingsPage/Settings';
 import NotificationsPage from './pages/NotificationsPage/notifications';
 import UnityGame from './components/Unity';
+import EditProfilePage from './pages/EditProfilePage/EditProfile';
 
 
 export const AuthContext = createContext(null);
@@ -84,6 +85,7 @@ function App() {
               <Route path="home" element={<HomePage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="settings" element={<SettingsPage />} />
+              <Route path="edit-profile" element={<EditProfilePage />} />
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="/unity-game" element={<UnityGame />} />
               <Route path="/leaderboard" element={<Leaderboard />} />

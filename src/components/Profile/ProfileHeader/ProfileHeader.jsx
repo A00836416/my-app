@@ -1,17 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../App';
 import styles from './ProfileHeader.module.css';
 import FotoPerfil from '../ProfileHeader/img/cars.png';
-import { logout, getUserInfo } from '../../../services/api';
-import { message } from 'antd';
+import { getUserInfo } from '../../../services/api';
+
 
 
 const ProfileHeader = () => {
-    const { setAuthState } = useContext(AuthContext);
+    
     const navigate = useNavigate(); // Inicializa el hook useNavigate
-    const [profilePic, setProfilePic] = useState(FotoPerfil); // Estado para manejar la imagen de perfil
-    const fileInputRef = React.useRef(null); // Referencia al input file
 
     // New state for employee data
     const [employeeData, setEmployeeData] = useState({
@@ -33,35 +30,11 @@ const ProfileHeader = () => {
     }, []);
 
 
-
-    // Manejador de la imagen seleccionada
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const imageUrl = URL.createObjectURL(file); // Crear una URL temporal para la imagen
-            setProfilePic(imageUrl); // Establece la imagen seleccionada como la nueva foto de perfil
-        }
-    };
-
-    // Función para simular el clic en el input file cuando se hace clic en la imagen
-    const handleProfilePicClick = () => {
-        fileInputRef.current.click(); // Simula el clic en el input de tipo file
-    };
-
     const goToHome = () => {
         navigate('/home'); // Redirige a la página de inicio
     };
 
-    const handleLogout = async () => {
-        try {
-            await logout();
-            message.success('Sesión cerrada exitosamente');
-            setAuthState({ isAuthenticated: false, userRole: null, userId: null, user: null });
-            navigate('/login');
-        } catch (error) {
-            message.error('Error al cerrar sesión');
-        }
-    };
+    
 
     const goToSettings = () => {
         navigate('/settings');
@@ -78,18 +51,11 @@ const ProfileHeader = () => {
                     <i className="fa-solid fa-gear"></i>
                 </button>
             </div>
-            <div className={styles.ProfilePic} onClick={handleProfilePicClick}>
-                <img src={profilePic} alt="foto perfil" />
-                {/* Input para cambiar la imagen de perfil (oculto) */}
-                <input
-                    type="file"
-                    accept="image/*"
-                    className={styles.FileInput}
-                    ref={fileInputRef} // Asigna la referencia al input
-                    onChange={handleImageChange}
-                    style={{ display: 'none' }} // Oculta el input
-                />
+
+            <div className={styles.ProfilePic}>
+                <img src={FotoPerfil} alt="foto perfil" />
             </div>
+
             <div className={styles.EmployeeLevel}>
                 <p className={styles.Name}>{employeeData.userName}</p>
                 <p className={styles.Kian}>Kian</p>
@@ -98,6 +64,7 @@ const ProfileHeader = () => {
                 </div>
                 <p className={styles.Nivel}>Nivel {employeeData.numeroNivel}</p>
             </div>
+
         </div>
     );
 };

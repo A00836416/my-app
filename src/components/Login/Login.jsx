@@ -12,50 +12,24 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { setAuthState } = useContext(AuthContext);
-
-    const decodeToken = (token) => {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-
-            return JSON.parse(jsonPayload);
-        } catch (error) {
-            console.error('Error decoding token:', error);
-            return null;
-        }
-    };
+    const { setIsAuthenticated, setUserRole } = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const userData = await login(username, password);
-            const decodedToken = decodeToken(userData.token);
-
-            if (decodedToken) {
-                setAuthState({
-                    isAuthenticated: true,
-                    userRole: userData.rol,
-                    userId: decodedToken.id,
-                    user: null,
-                    loading: false
-                });
-
-                if (userData.rol === 'administrador') {
-                    navigate('/admin');
-                } else {
-                    navigate('/home');
-                }
+            setIsAuthenticated(true);
+            setUserRole(userData.rol);
+            if (userData.rol === 'administrador') {
+                navigate('/admin');
             } else {
-                setError('Error al procesar la información de usuario');
+                navigate('/home');
             }
         } catch (err) {
             setError('Credenciales inválidas');
         }
     };
+
 
     return (
         <div className={styles.SignUp}>
@@ -72,6 +46,7 @@ const Login = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Username"
+                            className={styles.InputLogin}
                         />
                         <label htmlFor="password" className={styles.label}>Contraseña</label>
                         <Input
@@ -80,6 +55,7 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password"
+                            className={styles.InputLogin}
                         />
                         <Button type="submit">Log In</Button>
                         <a href="/forgot-password" className={styles.link}>Forgot password?</a>
