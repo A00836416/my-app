@@ -15,10 +15,22 @@ export const taskService = {
             });
             return response;
         } catch (error) {
-            console.error('Error adding employee:', error);
+            console.error('Error starting task:', error);
             throw error;
         }
     },
+
+    completeTask: async (taskId) => {
+        try {
+            const response = await axios.put(`${API_URL}/completar` , {
+                "tareaID": taskId
+            });
+            return response;
+        } catch (error) {
+            console.error('Error completing task:', error);
+            throw error;
+        }
+    }
 
     // Añade más métodos según sea necesario
 };

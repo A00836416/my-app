@@ -21,6 +21,7 @@ export const employeeService = {
     getTaskByEmployee: async () => {
         try {
             const response = await axios.get(`${API_URL}/tareas/empleado`);
+            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error('Error fetching employees:', error);

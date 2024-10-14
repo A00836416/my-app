@@ -31,6 +31,16 @@ const HomeTareaDiaria = () => {
         }
     }, []);
 
+    const getTaskDuration = (tarea) => {
+        const duracion = tarea.duracionEstimada;
+    
+        if (duracion === 1) {
+            return `${duracion} hora estimada`;
+        } else {
+            return `${duracion} horas estimadas`;
+        }
+    };
+
     useEffect(() => {
         fetchTareas(true);
     }, [fetchTareas]);
@@ -59,12 +69,29 @@ const HomeTareaDiaria = () => {
         return tarea.progresoEmpleado.estado;
     };
 
+    const getTaskStyle = (tarea) => {
+        const status = getTaskStyle(tarea);
+        switch (status) {
+            case 'Not Started':
+                return styles.taskNotStarted;
+            case 'In Progress':
+                return styles.taskInProgress;
+            case 'Completed':
+                return styles.taskCompleted;
+            case 'Verified':
+                return styles.taskVerified;
+            case 'Rejected':
+                return styles.taskRejected;
+            default:
+                return '';
+        }
+    };
+
     const handleStartTask = async (tarea) => {
         try {
             const response = await taskService.startTask(tarea.tareaID);
             if (response.status === 200) {
                 await fetchTareas();
-
             } else {
                 console.error('Failed to start task');
             }
@@ -109,14 +136,42 @@ const HomeTareaDiaria = () => {
             case 'In Progress':
                 return <button onClick={() => handleCompleteTask(tarea)} className={styles.completeButton}>Terminar</button>;
             case 'Completed':
-                return <span className={styles.completedText}>Tarea Completada</span>;
+                return <span className={styles.completedText}></span>;
             case 'Verified':
-                return <span className={styles.completedText}>Tarea Verificada</span>;
+                return <span className={styles.completedText}></span>;
             case 'Rejected':
                 return <button onClick={() => handleRetryTask(tarea)} className={styles.retryButton}>Reintentar</button>;
             default:
                 return null;
         }
+    };
+
+    const stylesMap = {
+        Culture: styles.culture,
+        Connection: styles.connection,
+        Compliance: styles.compliance,
+        Clarification: styles.clarification,
+        
+        NotStarted: styles.taskNotStarted,
+        InProgress: styles.taskInProgress,
+        Completed: styles.taskCompleted,
+        Verified: styles.taskVerified,
+        Rejected: styles.taskRejected,
+    };
+
+    const getDimensionName = (dimension) => {
+        const styleClass = stylesMap[dimension];
+        if (styleClass) {
+            return <span className={styleClass}>{dimension}</span>;
+        }
+        return null;
+    };
+
+    const truncateText = (text, limit = 50) => {
+        if (text.length > limit) {
+            return text.substring(0, limit) + '...';
+        }
+        return text;
     };
 
     if (isInitialLoading) return <div className={styles.loading}>Cargando tareas...</div>;
@@ -153,10 +208,26 @@ const HomeTareaDiaria = () => {
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            <h3>{tarea.nombreTarea}</h3>
-                            <p>{tarea.descripcionTarea}</p>
-                            <p className={styles.dimensionName}>{tarea.dimension.nombre}</p>
-                            <p className={styles.taskStatus}>Estado: {getTaskStatus(tarea)}</p>
+                            <div className={styles.taskHeader}>
+                                <h3 className={styles.taskName}>{tarea.nombreTarea}</h3> 
+                                <span className={styles.dimensionName}>{getDimensionName(tarea.dimension.nombre)}</span>
+                            </div>
+                            {/* Mostrar la descripción truncada si la tarjeta no está activa */}
+                            <div className={styles.taskDescription}>
+                                {activeCard === index
+                                    ? tarea.descripcionTarea.split(',').map((line, i) => <p key={i}>{line.trim()}</p>)
+                                    : truncateText(tarea.descripcionTarea, 50)}
+                            </div>
+                            <p className={styles.taskStatus}>
+                                {getTaskStatus(tarea)}
+                                {/* Mostrar el botón solo si la tarjeta está expandida */}
+                                {activeCard === index && (
+                                    <div className={styles.containerButton}>
+                                        
+                                        {renderTaskButton(tarea)}
+                                    </div>
+                                )}
+                            </p>
                         </motion.div>
                     ))
                 )}
@@ -171,20 +242,32 @@ const HomeTareaDiaria = () => {
                         onClick={handleOutsideClick}
                     >
                         <motion.div
-                            className={styles.activeCard}
-                            initial={{ opacity: 0, scale: 0.5 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.5 }}
-                            transition={{ duration: 0.3 }}
-                            ref={activeCardRef}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <h3>{tareasFiltradas[activeCard].nombreTarea}</h3>
-                            <p>{tareasFiltradas[activeCard].descripcionTarea}</p>
-                            <p className={styles.dimensionName}>{tareasFiltradas[activeCard].dimension.nombre}</p>
-                            <p className={styles.taskStatus}>Estado: {getTaskStatus(tareasFiltradas[activeCard])}</p>
-                            {renderTaskButton(tareasFiltradas[activeCard])}
-                        </motion.div>
+                        className={styles.activeCard}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        transition={{ duration: 0.3 }}
+                        ref={activeCardRef}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className={styles.taskHeader}>
+                            <h3 className={styles.taskName}>{tareasFiltradas[activeCard].nombreTarea}</h3>
+                            <span className={styles.dimensionName}>{getDimensionName(tareasFiltradas[activeCard].dimension.nombre)}</span>
+                        </div>
+                        {/* Mostrar la descripción completa en líneas separadas */}
+                        <div className={styles.taskDescription}>
+                            {tareasFiltradas[activeCard].descripcionTarea.split(',').map((line, index) => (
+                                <p key={index}>{line.trim()}</p>
+                            ))}
+                        </div>
+                        <p className={styles.taskDuration}>{getTaskDuration(tareasFiltradas[activeCard])}</p>
+                        <p className={styles.fechaLimite}>Fecha Límite: {tareasFiltradas[activeCard].fechaLimite}</p>
+                        <p className={styles.containerButton}>
+                             {getTaskStatus(tareasFiltradas[activeCard])}
+                                {renderTaskButton(tareasFiltradas[activeCard])}
+
+                        </p>
+                    </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>

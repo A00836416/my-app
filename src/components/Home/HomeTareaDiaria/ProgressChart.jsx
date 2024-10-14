@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ProgressChart.module.css';
 
-const ProgressChart = ({ tareas }) => {
+const ProgressChart = ({ tareas, fase }) => {
     const calculateProgress = () => {
         const progress = {
             completed: 0,
@@ -11,7 +11,10 @@ const ProgressChart = ({ tareas }) => {
             rejected: 0,
         };
 
-        tareas.forEach(tarea => {
+        // Filtra las tareas por fase
+        const tareasFiltradas = tareas.filter(tarea => tarea.fase === fase);
+
+        tareasFiltradas.forEach(tarea => {
             if (tarea.progresoEmpleado) {
                 switch (tarea.progresoEmpleado.estado) {
                     case 'Completed':
@@ -34,12 +37,18 @@ const ProgressChart = ({ tareas }) => {
             }
         });
 
-        const total = tareas.length;
-        return [
+        const total = tareasFiltradas.length;
+        // Asegúrate de no dividir entre cero
+        return total > 0 ? [
             { name: 'Verificadas', value: ((progress.verified) / total) * 100, class: styles.barCompleted },
             { name: 'Completadas', value: ((progress.completed) / total) * 100, class: styles.barCompleted },
             { name: 'En Progreso', value: (progress.inProgress / total) * 100, class: styles.barInProgress },
             { name: 'No Iniciadas', value: (progress.notStarted / total) * 100, class: styles.barNotStarted },
+        ] : [
+            { name: 'Verificadas', value: 0, class: styles.barCompleted },
+            { name: 'Completadas', value: 0, class: styles.barCompleted },
+            { name: 'En Progreso', value: 0, class: styles.barInProgress },
+            { name: 'No Iniciadas', value: 0, class: styles.barNotStarted },
         ];
     };
 
