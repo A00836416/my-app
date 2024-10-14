@@ -45,13 +45,13 @@ export const getUserInfo = async () => {
 export const updateUserInfo = async (userName, nombre, apellidoPaterno, apellidoMaterno, sexo, correoElectronico, posicion) => {
     try {
         const response = await axios.put(`${API_URL}/user`, {
-            userName,
-            nombre,
-            apellidoPaterno,
-            apellidoMaterno,
-            sexo,
-            correoElectronico,
-            posicion
+            userName: userName,
+            nombre: nombre,
+            apellidoPaterno: apellidoPaterno,
+            apellidoMaterno: apellidoMaterno,
+            sexo: sexo,
+            correoElectronico: correoElectronico,
+            posicion: posicion
         });
         return response.data;
     } catch (error) {
