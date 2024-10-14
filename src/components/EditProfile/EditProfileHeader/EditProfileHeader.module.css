@@ -1,0 +1,41 @@
+.EditProfileHeader{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    bottom: 843.5px;
+}
+
+.TabBarEditProfileHeader{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.EditProfileTitle{
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    margin-left: 35px;
+}
+
+.goToSettingsButton{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 30px;
+    padding: 0 0 0 20px;
+}
+
+.GuardarDatos{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    padding: 0 20px 0 0;
+}

@@ -72,6 +72,7 @@ const Login = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Username"
+                            className={styles.InputLogin}
                         />
                         <label htmlFor="password" className={styles.label}>Contraseña</label>
                         <Input
@@ -80,13 +81,14 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password"
+                            className={styles.InputLogin}
                         />
                         <Button type="submit">Log In</Button>
                         <a href="/forgot-password" className={styles.link}>Forgot password?</a>
                     </form>
                 </div>
             </div>
-            <footer>Need an account? <a href="/signup">Sign up here</a></footer>
+            
         </div>
     );
 };

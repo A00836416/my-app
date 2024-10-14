@@ -1,0 +1,79 @@
+.OptionsContainer{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    justify-content: center;
+    bottom: 510px;
+}
+
+.EditProfile{
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+    width: 100%;
+}
+
+.EditProfile h2{
+    font-size: 20px;
+    margin-right: 160px;
+}
+
+
+.goToEditUser{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+}
+
+.Seguridad{
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+    width: 100%;
+}
+
+.Seguridad h2{
+    font-size: 20px;
+    margin-right: 160px;
+}
+
+.goToSeguridad{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+}
+
+.LogOut{
+    display: flex;
+    position: relative;
+    color: white;
+    gap: 5px;
+    justify-content: center;
+    top: 400px;
+}
+
+.LogOutButton{
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 50%;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    
+}
+
+.LogOut h2{
+    font-size: 20px;
+    
+}

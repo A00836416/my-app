@@ -6,8 +6,24 @@
     height: auto;
     justify-content: center;
     align-items: center;
-    bottom: 580px;
+    bottom: 610px;
 
+}
+
+.TabBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+
+.HomeTitle{
+    font-size: 24px;
+    color: white;
+    
 }
 
 .ProfilePic{
@@ -49,7 +65,7 @@ p.Kian{
 
 .ProgressBar {
     display: flex;
-    width: 100%;
+    width: 110px;
     height: 10px;
     background-color: #D9D9D9;
     border-radius: 5px;
@@ -57,7 +73,6 @@ p.Kian{
 }
 
 .Progress {
-    width: 50%; /* Ajusta el porcentaje según sea necesario */
     height: 100%;
     background-color: #54D0CE; /* Color de la barra de progreso */
     border-radius: 5px;
@@ -73,16 +88,25 @@ p.Kian{
 }
 
 .goToHomebutton{
-    position: absolute;
-    padding: 0 20px;
+    padding: 0 0 0 20px;
     background-color: transparent;
     border: none; /* Asegúrate de que no haya borde */
     cursor:pointer;
     color: white;
     font-size: 30px;
-    margin-bottom: 33%;
-    margin-right: 80%;
-    
-    
-    
 }
+
+.Settings{
+    padding: 0 20px 0 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 30px;
+    transition: background-color 0.2s ease;
+}
+
+.Settings:active {
+    background-color:beige;
+}
+

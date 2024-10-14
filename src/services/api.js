@@ -32,12 +32,23 @@ export const checkAuthStatus = async () => {
     }
 };
 
-export const getUserInfo = async (userId) => {
+export const getUserInfo = async () => {
     try {
-        const response = await axios.get(`${API_URL}/user/`);
+        const response = await axios.get(`${API_URL}/user`);
         return response.data;
     } catch (error) {
         console.error("Error al obtener la información del usuario:", error);
         throw error;
     }
 };
+
+export const updateUserInfo = async (userData) => {
+    try {
+        const response = await axios.put(`${API_URL}/user`, userData);
+        return response.data;
+    } catch (error) {
+        console.error("Error al actualizar la información del usuario:", error);
+        throw error;
+    }
+};
+

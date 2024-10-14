@@ -5,7 +5,7 @@
     justify-content: center;
     width: 100%;
     height: auto;
-    bottom: 340px;
+    bottom: 390px;
 }
 
 .TareasTitle {
@@ -20,6 +20,8 @@
 
 .TareasTitle button {
     display: flex;
+    text-align: right;
+    justify-self:right;
 }
 
 .TareasTitle h2 {
@@ -49,24 +51,23 @@
 
 .CardContenedor {
     display: flex;
-    gap: 10px;
-    bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
     left: 10px;
-    width:100%; /* Ajusta el ancho para considerar el padding */
-    overflow-x: auto; /* Habilitar scroll horizontal */
-    white-space: nowrap; /* Evita que las tarjetas se envuelvan */
-    padding: 0px 20px; /* Agregar padding lateral para evitar que el contenido se pegue a los bordes */
-    box-sizing: border-box; /* Incluye el padding en el ancho total */
-    scrollbar-width: none;
+    padding: 0px 20px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 
 .CardScroller {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     overflow-x: auto; /* Permite el desplazamiento horizontal */
-    padding-bottom: 15px; /* Espacio para la barra de desplazamiento */
-    
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .CardScroller::-webkit-scrollbar {

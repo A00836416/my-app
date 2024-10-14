@@ -1,0 +1,76 @@
+.SettingsHeader{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    bottom: 663.5px;
+}
+
+.TabBarSettings{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    box-sizing: border-box;
+    align-items: center;
+    
+    
+}
+
+.SettingsTitle{
+    font-size: 24px;
+    color: white;
+    text-align: center;
+}
+
+.goToHomebutton{
+    
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 30px;
+    padding: 0 0 0 20px;
+}
+
+
+.ProfilePicEdit{
+    width: 125px;
+    height: 125px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    margin: 0;
+    overflow: hidden;
+    align-self: center;
+    margin-top: 10px;
+}
+
+.ProfilePicEdit img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.Edit{
+    position: relative;
+    align-self: center;
+    z-index: 1;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: black;
+    overflow: hidden;
+    align-content: center;
+    left: 45px;
+    bottom: 40px;
+
+}
+
+.EditButton{
+    background-color: transparent;
+    border: none; /* Asegúrate de que no haya borde */
+    cursor:pointer;
+    color: white;
+    font-size: 20px;
+}
