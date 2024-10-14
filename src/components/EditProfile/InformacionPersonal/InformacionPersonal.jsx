@@ -3,31 +3,48 @@ import styles from './InformacionPersonal.module.css';
 import Input from '../../shared/InputLogin/Input';
 import { getUserInfo } from '../../../services/api';
 
-const InformacionPersonal = () => {
+const InformacionPersonal = ({ onSave }) => {
+    // Estados para cada campo
+    const [usuario, setUsuario] = useState('');
     const [nombre, setNombre] = useState('');
     const [apellidoPaterno, setApellidoPaterno] = useState('');
     const [apellidoMaterno, setApellidoMaterno] = useState('');
     const [correoElectronico, setCorreoElectronico] = useState('');
-    const [genero, setGenero] = useState('');
+    const [posicion, setPosicion] = useState('');
+    const [sexo, setSexo] = useState('');
 
-    // New state for employee data
-    const [employeeData, setEmployeeData] = useState({
-        name: '',
-        level: 0,
-        progress: 0
-    });
-
-    // Simulated API call
+    // Cargar datos del usuario
     useEffect(() => {
-        const fetchEmployeeData = async () => {
-    
-            const data = await getUserInfo();
+        const fetchUserData = async () => {
+            const userInfo = await getUserInfo();
             
-            setEmployeeData(data);
+            // Poblamos los estados con los datos del usuario
+            setUsuario(userInfo.userName)
+            setNombre(userInfo.nombre);
+            setApellidoPaterno(userInfo.apellidoPaterno);
+            setApellidoMaterno(userInfo.apellidoMaterno);
+            setCorreoElectronico(userInfo.correoElectronico);
+            setPosicion(userInfo.posicion)
+            setSexo(userInfo.sexo); 
         };
 
-        fetchEmployeeData();
+        fetchUserData();
     }, []);
+
+    // Cada vez que cambian los valores, actualizamos el estado del componente padre
+    useEffect(() => {
+        if (onSave) {
+            onSave({
+                userName: usuario,
+                nombre,
+                apellidoPaterno,
+                apellidoMaterno,
+                sexo,
+                correoElectronico,
+                posicion
+            });
+        }
+    }, [usuario, nombre, apellidoPaterno, apellidoMaterno, sexo, correoElectronico, posicion, onSave]);
 
     return (
         <div className={styles.InformacionPersonal}>
@@ -36,6 +53,19 @@ const InformacionPersonal = () => {
             </div>
             
             <div className={styles.Casillas}>
+
+                <div className={styles.Usuario}>
+                    <h3 className={styles.label}>Usuario</h3>
+                    <Input
+                        type="text"
+                        id="Usuario"
+                        value={usuario}
+                        onChange={(e) => setUsuario(e.target.value)}
+                        placeholder="Usuario"
+                        className={styles.InputUsuario}
+                    />
+                </div>
+
                 <div className={styles.Nombre}>
                     <h3 className={styles.label}>Nombre</h3>
                     <Input
@@ -49,7 +79,7 @@ const InformacionPersonal = () => {
                 </div>
 
                 <div className={styles.ApellidoPaterno}>
-                    <h3 className={styles.label}>Appelido Paterno</h3>
+                    <h3 className={styles.label}>Apellido Paterno</h3>
                     <Input
                         type="text"
                         id="apellidoPaterno"
@@ -84,32 +114,44 @@ const InformacionPersonal = () => {
                     />
                 </div>
 
+                <div className={styles.Posicion}>
+                    <h3 className={styles.label}>Posicion</h3>
+                    <Input
+                        type="text"
+                        id="posicion"
+                        value={posicion}
+                        onChange={(e) => setPosicion(e.target.value)}
+                        placeholder="Posicion"
+                        className={styles.InputPosicion}
+                    />
+                </div>
+
                 <div className={styles.Genero}>
                     <h3 className={styles.label}>Sexo</h3>
                     <div className={styles.generoOptions}>
                         <label className={styles.generoOption}>
                             <Input
                                 type="radio"
-                                name="genero"
-                                value="male"
-                                checked={genero === 'male'}
-                                onChange={() => setGenero('male')}
+                                name="sexo"
+                                value="Masculino"
+                                checked={sexo === 'Masculino'}
+                                onChange={() => setSexo('Masculino')}
                             />
                             <span className={styles.customRadio}>
-                                {genero === 'male' && <i className={`fa-solid fa-check ${styles.checkIcon}`}></i>}
+                                {sexo === 'Masculino' && <i className={`fa-solid fa-check ${styles.checkIcon}`}></i>}
                             </span>
                             Masculino
                         </label>
                         <label className={styles.generoOption}>
                             <Input
                                 type="radio"
-                                name="genero"
-                                value="female"
-                                checked={genero === 'female'}
-                                onChange={() => setGenero('female')}
+                                name="sexo"
+                                value="Femenino"
+                                checked={sexo === 'Femenino'}
+                                onChange={() => setSexo('Femenino')}
                             />
                             <span className={styles.customRadio}>
-                                {genero === 'female' && <i className={`fa-solid fa-check ${styles.checkIcon}`}></i>}
+                                {sexo === 'Femenino' && <i className={`fa-solid fa-check ${styles.checkIcon}`}></i>}
                             </span>
                             Femenino
                         </label>

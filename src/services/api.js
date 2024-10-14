@@ -41,3 +41,22 @@ export const getUserInfo = async () => {
         throw error;
     }
 };
+
+export const updateUserInfo = async (userName, nombre, apellidoPaterno, apellidoMaterno, sexo, correoElectronico, posicion) => {
+    try {
+        const response = await axios.put(`${API_URL}/user`, {
+            userName,
+            nombre,
+            apellidoPaterno,
+            apellidoMaterno,
+            sexo,
+            correoElectronico,
+            posicion
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error al actualizar la información del usuario:", error); 
+        throw error;
+    }
+};
+
