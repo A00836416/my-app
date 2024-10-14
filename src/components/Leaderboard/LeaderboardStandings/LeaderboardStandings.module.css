@@ -50,7 +50,6 @@ tbody tr:nth-child(odd) td {
 td {
     padding: 10px; /* Espaciado interno */
     text-align: center; /* Centrar contenido */
-    color: white;
 }
 
 .medalImage {

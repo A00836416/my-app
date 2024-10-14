@@ -9,7 +9,7 @@ import bronzeMedal from './bronze_medal.png';
 // List of random names
 const names = [ 
     'Bernardo', 'Juan Daniel', 'Gavlan', 'Harold', 'Rocha', 
-    'Luis', 'Marta', 'Pedro', 'Sofia', 'Miguel',
+    'Luis', 'Raúl', 'Pedro', 'Sofia', 'Miguel',
     'Elena', 'Javier', 'Camila', 'Daniel', 'Lucia',
     'Andres', 'Natalia', 'Diego', 'Valeria', 'Cristian',
     'Laura', 'Alejandro', 'Carolina', 'Felipe', 'Maria',
