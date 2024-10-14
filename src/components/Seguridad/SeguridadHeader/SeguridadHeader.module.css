@@ -1,0 +1,32 @@
+.SeguridadHeader{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    bottom: 843.5px;
+}
+
+.TabBarSeguridad{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.goToSettingsButton{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 30px;
+    padding: 0 0 0 20px;
+}
+
+.SeguridadTitle{
+    font-size: 24px;
+    color: white;
+    text-align: center;
+}

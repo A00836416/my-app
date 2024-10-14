@@ -13,6 +13,8 @@ import SettingsPage from './pages/SettingsPage/Settings';
 import NotificationsPage from './pages/NotificationsPage/notifications';
 import UnityGame from './components/Unity';
 import EditProfilePage from './pages/EditProfilePage/EditProfile';
+import SeguridadPage from './pages/SeguridadPage/SeguridadPage';
+import CambiarContraseña from './pages/CambiarContraseñaPage/CambiarContraseña';
 
 
 export const AuthContext = createContext(null);
@@ -86,6 +88,8 @@ function App() {
               <Route path="profile" element={<ProfilePage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="edit-profile" element={<EditProfilePage />} />
+              <Route path="security" element={<SeguridadPage />} />
+              <Route path="change-password" element={<CambiarContraseña />} />
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="/unity-game" element={<UnityGame />} />
               <Route path="/leaderboard" element={<Leaderboard />} />

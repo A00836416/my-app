@@ -1,0 +1,40 @@
+.SeguridadContraseña{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    justify-content: center;
+    bottom: 720px;
+}
+
+.SeguridadContraseña h2{
+    font-size: 20px;
+}
+.Title{
+    display: flex;
+    color: white;
+    
+}
+
+.CambiarContraseña{
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+    width: 100%;
+}
+
+.CambiarContraseña h2{
+    font-size: 20px;
+    margin-right: 100px;
+}
+
+.goToCambiarContraseña{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+}

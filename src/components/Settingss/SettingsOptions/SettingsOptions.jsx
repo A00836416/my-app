@@ -24,6 +24,10 @@ const SettingsOptions = () => {
         navigate('/edit-profile');
     };
 
+    const goToSeguridad = () =>{
+        navigate('/security');
+    };
+
 
     return(
         <div className={styles.OptionsContainer}>
@@ -35,7 +39,7 @@ const SettingsOptions = () => {
                 </button>
             </div>
 
-            <div className={styles.Seguridad}>
+            <div className={styles.Seguridad} onClick={goToSeguridad}>
                 <i className="fa-solid fa-lock"></i>
                 <h2>Seguridad</h2>
                 <button className={styles.goToSeguridad}>
