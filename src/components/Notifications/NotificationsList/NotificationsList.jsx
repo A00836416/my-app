@@ -14,10 +14,10 @@ const NotificationsList = ({ groupedNotifications }) => {
         <div className={styles.notificationsContainer}>
             {Object.keys(groupedNotifications).map((key) => (
                 <div key={key}>
-                    <h2>{headerMap[key]}</h2> {/* Usar el mapeo aquí */}
-                    <ul>
+                    <h2 className={styles.TituloFechas}>{headerMap[key]}</h2> {/* Usar el mapeo aquí */}
+                    <ul className={styles.Grupo}>
                         {groupedNotifications[key].map((notification) => (
-                            <li key={notification.id}>
+                            <li key={notification.id} className={styles.Notificaciones}>
                                 <h3 className={styles.notificationTitle}>{notification.title}</h3>
                                 <p className={styles.notificationDescription}>{notification.description}</p>
                                 <span className={styles.notificationTime}>{getTimeAgo(notification.date)}</span>
