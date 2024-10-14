@@ -16,7 +16,6 @@ import EditProfilePage from './pages/EditProfilePage/EditProfile';
 import SeguridadPage from './pages/SeguridadPage/SeguridadPage';
 import CambiarContraseña from './pages/CambiarContraseñaPage/CambiarContraseña';
 
-
 export const AuthContext = createContext(null);
 
 function App() {
@@ -95,7 +94,6 @@ function App() {
               <Route path="/leaderboard" element={<Leaderboard />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
-
           </Routes>
         </div>
       </Router>

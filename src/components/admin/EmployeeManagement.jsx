@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Table, Button, message, Input, Tag, Modal, Form, Space, Select, DatePicker } from 'antd';
 import { SearchOutlined, PlusOutlined, UserOutlined, MailOutlined, BankOutlined, TeamOutlined, EditOutlined, DeleteOutlined, CalendarOutlined, LockOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { employeeService } from '../../services/employeeService';
 import { departmentService } from '../../services/departmentService';
 import { AuthContext } from '../../App';
@@ -121,6 +121,7 @@ const EmployeeManagement = () => {
             key: 'actions',
             render: (_, record) => (
                 <Space size="middle">
+                    <Link to={`/admin/employees/${record.empleadoID}`}>Ver Detalles</Link>
                     <Button type="link" icon={<EditOutlined />}>Editar</Button>
                     <Button type="link" danger icon={<DeleteOutlined />}>Eliminar</Button>
                 </Space>

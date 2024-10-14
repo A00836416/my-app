@@ -1,31 +1,29 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Layout, Menu, Typography, Button, message, Card, Avatar, Spin } from 'antd';
 import { UserOutlined, ProjectOutlined, TeamOutlined, DashboardOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Routes, Route, Link } from 'react-router-dom';
 import { AuthContext } from '../../src/App';
 import { logout, getUserInfo } from '../services/api';
 import EmployeeManagement from '../components/admin/EmployeeManagement';
 import TaskManagement from '../components/admin/TaskManagement';
 import DepartmentManagement from '../components/admin/DepartmentManagement';
-import TaskProgress from '../components/admin/TaskProgress';
 import AdminDashboardStats from '../components/admin/DashboardStats';
 import logo from '../components/Login/assets/img/kia-logo-nuevo-blanco-1.png';
+import EmployeeDetailsPage from '../components/admin/EmployeeDetails';
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
 const AdminPage = () => {
-    const [currentView, setCurrentView] = useState('dashboard');
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const { isAuthenticated, userId, userRole, user, setAuthState } = useContext(AuthContext);
 
     useEffect(() => {
         const fetchUserInfo = async () => {
-
             if (isAuthenticated && userId && !user) {
-                console.log(userId);
                 try {
                     setLoading(true);
                     const userInfo = await getUserInfo(userId);
@@ -68,26 +66,11 @@ const AdminPage = () => {
     };
 
     const menuItems = [
-        { key: 'dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
-        { key: 'employees', icon: <UserOutlined />, label: 'Empleados' },
-        { key: 'tasks', icon: <ProjectOutlined />, label: 'Tareas' },
-        { key: 'departments', icon: <TeamOutlined />, label: 'Departamentos' },
+        { key: 'dashboard', icon: <DashboardOutlined />, label: 'Dashboard', path: '/admin' },
+        { key: 'employees', icon: <UserOutlined />, label: 'Empleados', path: '/admin/employees' },
+        { key: 'tasks', icon: <ProjectOutlined />, label: 'Tareas', path: '/admin/tasks' },
+        { key: 'departments', icon: <TeamOutlined />, label: 'Departamentos', path: '/admin/departments' },
     ];
-
-    const renderContent = () => {
-        switch (currentView) {
-            case 'dashboard':
-                return <AdminDashboardStats />;
-            case 'employees':
-                return <EmployeeManagement />;
-            case 'tasks':
-                return <TaskManagement />;
-            case 'departments':
-                return <DepartmentManagement />;
-            default:
-                return <TaskProgress />;
-        }
-    };
 
     if (loading) {
         return (
@@ -109,11 +92,15 @@ const AdminPage = () => {
                 </div>
                 <Menu
                     mode="inline"
-                    defaultSelectedKeys={['dashboard']}
+                    selectedKeys={[location.pathname]}
                     style={{ borderRight: 0 }}
-                    items={menuItems}
-                    onSelect={({ key }) => setCurrentView(key)}
-                />
+                >
+                    {menuItems.map(item => (
+                        <Menu.Item key={item.path} icon={item.icon}>
+                            <Link to={item.path}>{item.label}</Link>
+                        </Menu.Item>
+                    ))}
+                </Menu>
             </Sider>
             <Layout style={{ marginLeft: 200 }}>
                 <Header style={{
@@ -152,12 +139,13 @@ const AdminPage = () => {
                         display: 'flex',
                         flexDirection: 'column'
                     }}>
-                        <Title level={4} style={{ marginBottom: '16px' }}>
-                            {currentView.charAt(0).toUpperCase() + currentView.slice(1)}
-                        </Title>
-                        <div style={{ flex: 1, overflowY: 'auto' }}>
-                            {renderContent()}
-                        </div>
+                        <Routes>
+                            <Route path="/" element={<AdminDashboardStats />} />
+                            <Route path="/employees" element={<EmployeeManagement />} />
+                            <Route path="/employees/:employeeId" element={<EmployeeDetailsPage />} />
+                            <Route path="/tasks" element={<TaskManagement />} />
+                            <Route path="/departments" element={<DepartmentManagement />} />
+                        </Routes>
                     </Card>
                 </Content>
             </Layout>
