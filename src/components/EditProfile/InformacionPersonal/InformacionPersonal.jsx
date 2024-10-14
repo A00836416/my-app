@@ -17,6 +17,7 @@ const InformacionPersonal = ({ onSave }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             const userInfo = await getUserInfo();
+            console.log(userInfo);
             
             // Poblamos los estados con los datos del usuario
             setUsuario(userInfo.userName)
@@ -24,7 +25,7 @@ const InformacionPersonal = ({ onSave }) => {
             setApellidoPaterno(userInfo.apellidoPaterno);
             setApellidoMaterno(userInfo.apellidoMaterno);
             setCorreoElectronico(userInfo.correoElectronico);
-            setPosicion(userInfo.posicion)
+            setPosicion(userInfo.posicion);
             setSexo(userInfo.sexo); 
         };
 
@@ -133,7 +134,7 @@ const InformacionPersonal = ({ onSave }) => {
                             <Input
                                 type="radio"
                                 name="sexo"
-                                value="Masculino"
+                                value={sexo}
                                 checked={sexo === 'Masculino'}
                                 onChange={() => setSexo('Masculino')}
                             />
@@ -146,7 +147,7 @@ const InformacionPersonal = ({ onSave }) => {
                             <Input
                                 type="radio"
                                 name="sexo"
-                                value="Femenino"
+                                value={sexo}
                                 checked={sexo === 'Femenino'}
                                 onChange={() => setSexo('Femenino')}
                             />

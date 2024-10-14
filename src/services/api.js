@@ -42,20 +42,12 @@ export const getUserInfo = async () => {
     }
 };
 
-export const updateUserInfo = async (userName, nombre, apellidoPaterno, apellidoMaterno, sexo, correoElectronico, posicion) => {
+export const updateUserInfo = async (userData) => {
     try {
-        const response = await axios.put(`${API_URL}/user`, {
-            userName: userName,
-            nombre: nombre,
-            apellidoPaterno: apellidoPaterno,
-            apellidoMaterno: apellidoMaterno,
-            sexo: sexo,
-            correoElectronico: correoElectronico,
-            posicion: posicion
-        });
+        const response = await axios.put(`${API_URL}/user`, userData);
         return response.data;
     } catch (error) {
-        console.error("Error al actualizar la información del usuario:", error); 
+        console.error("Error al actualizar la información del usuario:", error);
         throw error;
     }
 };

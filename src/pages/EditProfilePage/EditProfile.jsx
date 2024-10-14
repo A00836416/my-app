@@ -11,7 +11,7 @@ const EditProfilePage = () => {
         try {
             // Guardar la información del usuario en la API
             if (userInfo) {
-                console.log('Datos que se envían para la actualización:', userInfo);
+                console.log('Datos:', userInfo);
                 await updateUserInfo(userInfo);
                 alert('Información guardada exitosamente.');
             } else {
