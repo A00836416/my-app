@@ -5,7 +5,7 @@
     width: 90%;
     height: auto;
     justify-content: center;
-    bottom: 610px;
+    bottom: 320px;
 }
 
 .InformacionPersonal h2{
@@ -15,19 +15,157 @@
 .Title{
     display: flex;
     color: white;
+    margin-bottom: 10px;
+}
+
+.Casillas{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .Nombre{
+    display: flex;
+    flex-direction: column;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
+    align-items: flex-start;
+    padding: 15px 15px;
+    gap: 5px;
+    border-radius: 8px;
 }
 
+.label{
+    font-size: small;
+    margin: 0;
+    color: #ccc;
+}
+
+
 .InputNombre{
-    width: 94%;
-    padding: 10px;
-    margin: 10px 0;
+    width: 100%;
     border: none;
     border-radius: 5px;
     background-color: transparent;
-    color: #ccc;
+    color: white;
+    padding: 0;
+}
+
+.ApellidoPaterno{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    align-items: flex-start;
+    padding: 15px 15px;
+    gap: 5px;
+    border-radius: 8px;
+}
+
+
+.InputPaterno{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    padding: 0;
+}
+
+.ApellidoMaterno{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    align-items: flex-start;
+    padding: 15px 15px;
+    gap: 5px;
+    border-radius: 8px;
+}
+
+
+.InputMaterno{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    padding: 0;
+}
+
+.Email{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    align-items: flex-start;
+    padding: 15px 15px;
+    gap: 5px;
+    border-radius: 8px;
+}
+
+.InputEmail{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    padding: 0;
+}
+
+.Genero {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    align-items: flex-start;
+    padding: 15px 15px;
+    gap: 10px;
+    border-radius: 8px;
+}
+
+.generoOptions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.generoOption {
+    display: flex;
+    align-items: center;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.generoOption input[type="radio"] {
+    display: none;
+}
+
+.customRadio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.generoOption input[type="radio"]:checked + .customRadio {
+    border-color: #3498db;
+}
+
+.generoOption input[type="radio"]:checked + .customRadio::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-color: #3498db;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
