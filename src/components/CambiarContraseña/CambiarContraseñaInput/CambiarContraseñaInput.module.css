@@ -1,0 +1,88 @@
+.CambiarContraseñaInput{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    height: auto;
+    justify-content: center;
+    bottom: 580px;
+}
+
+.Instruccion{
+    display: flex;
+    color: white;
+    font-size: small;
+    
+}
+
+.label{
+    font-size: small;
+    margin: 0;
+    color: #ccc;
+}
+
+.ContraseñaActual{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    align-items: flex-start;
+    padding: 15px 15px;
+    gap: 5px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.InputContraseñaActual{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    padding: 0;
+}
+
+
+
+.NuevaContraseña{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    align-items: flex-start;
+    padding: 15px 15px;
+    gap: 5px;
+    border-radius: 8px;
+}
+
+.InputNuevaContraseña{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    padding: 0;
+}
+
+.CambiarContraseña{
+    display: flex;
+    position: relative;
+    color: white;
+    gap: 5px;
+    justify-content: center;
+    top: 500px;
+}
+
+.CambiarContraseñaButton{
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 80%;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+}
+
+.CambiarContraseñaButton h2{
+    font-size: 20px;
+}
