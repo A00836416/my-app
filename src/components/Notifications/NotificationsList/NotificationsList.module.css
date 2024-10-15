@@ -23,21 +23,24 @@
 }
 
 
-h2 {
+.TituloFechas{
     font-size: 20px;
     margin-bottom: 8px;
     color: white;
     text-align: left;
 }
 
-ul {
+.Grupo {
     list-style-type: none;
     padding: 0;
     margin: 0;
     width: 100%; /* Ocupa el ancho completo para facilitar el alineado */
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
 }
 
-li {
+.Notificaciones {
     margin: 4px 0;
     padding: 16px;
     border-radius: 4px;
@@ -48,12 +51,19 @@ li {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
 }
 
 .notificationTitle {
     font-size: 18px;
     font-weight: bold;
     color: #fff;
+    margin-top: 20px;
+    
 }
 
 .notificationDescription {

@@ -52,3 +52,13 @@ export const updateUserInfo = async (userData) => {
     }
 };
 
+
+export const changePassword = async (data) => {
+    try {
+        const response = await axios.put(`${API_URL}/change-password`, data);
+        return response.data;
+    } catch (error) {
+        console.error("Error al actualizar la información del usuario:", error);
+        throw error;
+    }
+};
