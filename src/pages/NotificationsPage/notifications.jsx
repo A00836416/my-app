@@ -6,10 +6,17 @@ import NotificationsHeader from '../../components/Notifications/NotificationsHea
 import NotificationsList from '../../components/Notifications/NotificationsList/NotificationsList';
 import styles from './NotificationsPage.module.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import { notificationsService } from '../../services/notificationsService';
 
 const NotificationsPage = () => {
     const [user, setUser] = useState(null);
-    const [groupedNotifications, setGroupedNotifications] = useState({});
+    const [groupedNotifications, setGroupedNotifications] = useState({
+        hoy: [],
+        ayer: [],
+        ultimos7Dias: [],
+        ultimoMes: [],
+    });
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const { setIsAuthenticated } = useContext(AuthContext);
 
@@ -17,6 +24,7 @@ const NotificationsPage = () => {
         const fetchAuthStatus = async () => {
             try {
                 const userData = await checkAuthStatus();
+                console.log(userData);
                 setUser(userData);
                 loadNotifications(userData.id);
             } catch (error) {
@@ -28,18 +36,23 @@ const NotificationsPage = () => {
     }, [navigate, setIsAuthenticated]);
 
     const loadNotifications = async (userId) => {
-        const mockNotifications = [
-            { id: 1, title: 'Nueva tarea asignada', description: 'Se te ha asignado una nueva tarea para el proyecto X.', date: new Date() },
-            { id: 2, title: 'Recordatorio de reunión', description: 'Tu reunión con el equipo comienza en 15 minutos.', date: new Date() },
-            { id: 3, title: 'Comentario en tu tarea', description: 'Alguien ha comentado en tu tarea.', date: new Date(Date.now() - 86400000) },
-            { id: 4, title: 'Documento revisado', description: 'La revisión del documento ha sido completada.', date: new Date(Date.now() - 86400000) },
-            { id: 5, title: 'Actualización de software', description: 'Hay una nueva actualización de software disponible.', date: new Date(Date.now() - 86400000 * 2) },
-            { id: 6, title: 'Recordatorio de pago', description: 'Recuerda realizar el pago de tus servicios.', date: new Date(Date.now() - 86400000 * 3) },
-            { id: 7, title: 'Solicitud de conexión', description: 'Has recibido una nueva solicitud de conexión.', date: new Date(Date.now() - 86400000 * 6) },
-            { id: 8, title: 'Documento enviado', description: 'Se ha enviado el documento para su revisión.', date: new Date(Date.now() - 86400000 * 10) },
-        ];
+        try {
+            const response = await notificationsService.getnotifications();
+            const data = await response;
 
-        setGroupedNotifications(groupNotificationsByDate(mockNotifications));
+            const transformedNotifications = data.map(notification => ({
+                id: notification.notificacionID,
+                title: notification.mensaje,
+                description: `${notification.nombreReceptor} ${notification.apellidoReceptor}`,
+                date: new Date(notification.fechaCreacion),
+            }));
+
+            setGroupedNotifications(groupNotificationsByDate(transformedNotifications));
+        } catch (error) {
+            console.error('Error al cargar las notificaciones:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const groupNotificationsByDate = (notifications) => {
@@ -74,12 +87,21 @@ const NotificationsPage = () => {
         return grouped;
     };
 
-    if (!user) return <div className={styles.loading}>Loading...</div>;
+    if (isLoading) {
+        return <div className={styles.loading}>Cargando notificaciones...</div>;
+    }
+
+    const noNotifications = !groupedNotifications.hoy.length && !groupedNotifications.ayer.length &&
+                            !groupedNotifications.ultimos7Dias.length && !groupedNotifications.ultimoMes.length;
 
     return (
         <div className={styles.container}>
             <NotificationsHeader />
-            <NotificationsList groupedNotifications={groupedNotifications} />
+            {noNotifications ? (
+                <div className={styles.noNotifications}>No tienes notificaciones</div>
+            ) : (
+                <NotificationsList groupedNotifications={groupedNotifications} />
+            )}
         </div>
     );
 };
