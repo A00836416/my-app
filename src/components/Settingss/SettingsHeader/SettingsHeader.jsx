@@ -24,7 +24,7 @@ const SettingsHeader = ({ initialImage, employeeData }) => {
 
     useEffect(() => {
         const initialIndex = profileImages.findIndex((value) => value.src === initialImage);
-    
+            
      
         if (initialIndex !== -1) {
             setProfilePicIndex(initialIndex);

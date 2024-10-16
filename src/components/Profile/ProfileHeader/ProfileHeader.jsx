@@ -7,11 +7,16 @@ import { getUserInfo } from '../../../services/api';
 
 
 
-const ProfileHeader = () => {
+const profileImagesClasses = {
+    '/static/media/kiacarro1.e7abeb30524397ac7a5d.png': styles.Carro1,
+    '/static/media/kiacarro2.58a01e82ae41d6887358.png': styles.Carro2,
+    '/static/media/kiacarro3.950c68ff6334e1b067fd.png': styles.Carro3
     
-    const navigate = useNavigate(); // Inicializa el hook useNavigate
+};
 
-    // New state for employee data
+const ProfileHeader = () => {
+    const navigate = useNavigate();
+
     const [employeeData, setEmployeeData] = useState({
         name: '',
         level: 0,
@@ -19,28 +24,21 @@ const ProfileHeader = () => {
         fotoPerfil: '/static/media/kiacarro3.950c68ff6334e1b067fd.png'
     });
 
-    // Simulated API call
     useEffect(() => {
         const fetchEmployeeData = async () => {
-    
             const data = await getUserInfo();
-            console.log(data);
-            
             setEmployeeData(data);
         };
 
         fetchEmployeeData();
     }, []);
 
-
     const goToHome = () => {
-        navigate('/home'); // Redirige a la página de inicio
+        navigate('/home');
     };
 
-    
-
     const goToSettings = () => {
-        navigate('/settings', { state: { employeeData } }) ;
+        navigate('/settings', { state: { employeeData } });
     };
 
     return (
@@ -56,28 +54,31 @@ const ProfileHeader = () => {
             </div>
 
             <div className={styles.ProfilePic}>
-                <img src={employeeData.fotoPerfil} alt="foto perfil" />
+                <img
+                    src={employeeData.fotoPerfil}
+                    alt="foto perfil"
+                    className={profileImagesClasses[employeeData.fotoPerfil] || styles.defaultProfilePic} 
+                />
             </div>
 
             <div className={styles.EmployeeLevel}>
                 <p className={styles.Name}>{employeeData.userName}</p>
                 <p className={styles.Kian}>Kian</p>
-                
                 <div className={styles.ProgresoUsuario}>
                     <div className={styles.ObjectPic}>
                         <img src={FotoObjeto} alt="objeto nivel" />
                     </div>
-
                     <div className={styles.InfoContainer}>
                         <p className={styles.Nivel}>Nivel {employeeData.numeroNivel}</p>
                         <div className={styles.ProgressBar}>
-                            <div className={styles.Progress} style={{ width: `${employeeData.experienciaTotal}%` }}></div>
+                            <div
+                                className={styles.Progress}
+                                style={{ width: `${employeeData.experienciaTotal}%` }}
+                            ></div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     );
 };
