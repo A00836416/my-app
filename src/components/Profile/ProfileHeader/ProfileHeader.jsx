@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ProfileHeader.module.css';
 import FotoPerfil from '../ProfileHeader/img/cars.png';
+import FotoObjeto from '../ProfileHeader/img/trofeo2.webp';
 import { getUserInfo } from '../../../services/api';
 
 
@@ -59,10 +60,20 @@ const ProfileHeader = () => {
             <div className={styles.EmployeeLevel}>
                 <p className={styles.Name}>{employeeData.userName}</p>
                 <p className={styles.Kian}>Kian</p>
-                <div className={styles.ProgressBar}>
-                    <div className={styles.Progress} style={{ width: `${employeeData.experienciaTotal}%` }}></div>
+                
+                <div className={styles.ProgresoUsuario}>
+                    <div className={styles.ObjectPic}>
+                        <img src={FotoObjeto} alt="objeto nivel" />
+                    </div>
+
+                    <div className={styles.InfoContainer}>
+                        <p className={styles.Nivel}>Nivel {employeeData.numeroNivel}</p>
+                        <div className={styles.ProgressBar}>
+                            <div className={styles.Progress} style={{ width: `${employeeData.experienciaTotal}%` }}></div>
+                        </div>
+                    </div>
                 </div>
-                <p className={styles.Nivel}>Nivel {employeeData.numeroNivel}</p>
+
             </div>
 
         </div>
