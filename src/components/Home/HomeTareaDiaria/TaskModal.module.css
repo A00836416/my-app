@@ -1,0 +1,154 @@
+.activeCardOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+
+}
+
+.activeCard {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 24px;
+}
+
+.taskHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.taskName {
+    font-size: 24px;
+    text-align: left;
+    color: #40c7b8;
+    margin: 0;
+    font-weight: bold;
+    margin-right: 16px;
+}
+
+
+
+.taskDescription {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.taskInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.taskInfo>span {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.fechaLimite {
+    font-weight: bold;
+    font-size: 14px;
+    color: #FF5733;
+    padding: 8px 12px;
+    border: 1px solid #FF5733;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.taskStatus {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statusBadge {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.notStarted {
+    background-color: rgba(255, 165, 0, 0.5);
+    color: #fff;
+}
+
+.inProgress {
+    background-color: rgba(52, 152, 219, 0.5);
+    color: #fff;
+}
+
+.completed,
+.verified {
+    background-color: rgba(46, 204, 113, 0.5);
+    color: #fff;
+}
+
+.rejected {
+    background-color: rgba(231, 76, 60, 0.5);
+    color: #fff;
+}
+
+.containerButton {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.containerButton button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background-color: #40c7b8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.taskProgress {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Estilos para los estados de las tareas */
+
+
+@media (max-width: 768px) {
+    .activeCard {
+        width: 95%;
+        padding: 20px;
+    }
+}
