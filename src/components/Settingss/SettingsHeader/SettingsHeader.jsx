@@ -3,20 +3,40 @@ import { useNavigate } from 'react-router-dom';
 import Carro1 from '../../../images/profile/kiacarro1.png';
 import Carro2 from '../../../images/profile/kiacarro2.png';
 import Carro3 from '../../../images/profile/kiacarro3.png';
+import { message } from 'antd';
+import { updateProfilePicture } from '../../../services/api'; 
 import styles from '../SettingsHeader/SettingsHeader.module.css';
+import { useEffect } from 'react';
 
-// Lista de imágenes disponibles en la carpeta con sus clases específicas
+// Lista de imágenes disponibles
 const profileImages = [
     { src: Carro1, className: styles.Carro1 },
     { src: Carro2, className: styles.Carro2 },
     { src: Carro3, className: styles.Carro3 },
 ];
 
-const SettingsHeader = () => {
+const SettingsHeader = ({ initialImage, employeeData }) => {
     const navigate = useNavigate();
     const [profilePicIndex, setProfilePicIndex] = useState(0); // Controla el índice de la imagen seleccionada
     const [showEditOptions, setShowEditOptions] = useState(false); 
+    const [isSaving, setIsSaving] = useState(false); // Estado para manejar el guardado
 
+
+    useEffect(() => {
+        const initialIndex = profileImages.findIndex((value) => value.src === initialImage);
+    
+     
+        if (initialIndex !== -1) {
+            setProfilePicIndex(initialIndex);
+        } else {
+            setProfilePicIndex(0); 
+        }
+    
+        console.log("Indice inicial de la imagen:", initialIndex);
+    }, [initialImage]);
+    
+
+    
     const goToProfile = () => {
         navigate('/profile'); // Redirige a la página de perfil
     };
@@ -35,6 +55,25 @@ const SettingsHeader = () => {
         );
     };
 
+    const handleSaveProfilePic = async () => {
+        setIsSaving(true); // Muestra que está guardando
+        const selectedImage = profileImages[profilePicIndex].src; // Obtiene la imagen seleccionada
+
+        try {
+            // Llamar a la API para actualizar la imagen de perfil
+            const data = await updateProfilePicture(selectedImage);
+
+            console.log('Imagen de perfil actualizada correctamente:', data);
+            message.success('Imagen de perfil actualizada');
+        } catch (error) {
+            console.error('Error al actualizar la imagen de perfil:', error);
+            message.error('Error al actualizar');
+        } finally {
+            setIsSaving(false); // Oculta el estado de guardado
+            setShowEditOptions(false); // Salir del modo de edición
+        }
+    };
+
     return (
         <div className={styles.SettingsHeader}>
             <div className={styles.TabBarSettings}>
@@ -45,7 +84,6 @@ const SettingsHeader = () => {
             </div>
 
             <div className={styles.ProfilePicContainer}>
-                {/* Flecha de la izquierda */}
                 {showEditOptions && (
                     <div className={styles.PrevEdit}>
                         <button className={styles.PrevButton} onClick={handlePrevPic}>
@@ -54,7 +92,6 @@ const SettingsHeader = () => {
                     </div>
                 )}
 
-                {/* Imagen de perfil */}
                 <div className={styles.ProfilePicEdit}>
                     <img
                         src={profileImages[profilePicIndex].src}
@@ -63,7 +100,6 @@ const SettingsHeader = () => {
                     />
                 </div>
 
-                {/* Flecha de la derecha */}
                 {showEditOptions && (
                     <div className={styles.NextEdit}>
                         <button className={styles.NextButton} onClick={handleNextPic}>
@@ -76,7 +112,11 @@ const SettingsHeader = () => {
             <div className={styles.Edit}>
                 <button className={styles.EditButton} onClick={handleProfilePicClick}>
                     {showEditOptions ? (
-                        <i className="fa-solid fa-check"></i> // Cambia a botón de "Aceptar"
+                        isSaving ? (
+                            <span>Guardando...</span> // Muestra estado de guardado
+                        ) : (
+                            <i className="fa-solid fa-check" onClick={handleSaveProfilePic}></i> // Botón de "Aceptar" y guardar
+                        )
                     ) : (
                         <i className="fa-solid fa-pencil"></i> // Botón de "Editar"
                     )}

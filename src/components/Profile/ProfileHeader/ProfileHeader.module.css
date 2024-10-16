@@ -113,15 +113,15 @@ p.Kian{
 .ProgresoUsuario{
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 1fr 2fr; /* Dos columnas: la primera más estrecha para la imagen */
+    grid-template-columns: 0.5fr 2fr; /* Dos columnas: la primera más estrecha para la imagen */
     gap: 15px; /* Espacio entre las columnas */
     align-items: center; /* Alinea el contenido verticalmente en el centro */
 }
 
 .ObjectPic{
     justify-self: end;
-    width: 35px;
-    height: 35px;
+    width: 24px;
+    height: 24px;
     background-color: transparent;
     border-radius: 50%;
     overflow: hidden;

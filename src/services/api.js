@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3002/auth';
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true; // Asegura el envío de cookies
 
 export const login = async (userName, contrasena) => {
     try {
@@ -52,13 +52,26 @@ export const updateUserInfo = async (userData) => {
     }
 };
 
-
 export const changePassword = async (data) => {
     try {
         const response = await axios.put(`${API_URL}/change-password`, data);
         return response.data;
     } catch (error) {
         console.error("Error al actualizar la información del usuario:", error);
+        throw error;
+    }
+};
+
+// Nueva función para actualizar la foto de perfil
+export const updateProfilePicture = async (imagePath) => {
+    try {
+        const response = await axios.put(`${API_URL}/user/profile-picture`, {
+            fotoPerfilPath: imagePath, // Enviar la ruta de la imagen
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error("Error al actualizar la imagen de perfil:", error);
         throw error;
     }
 };

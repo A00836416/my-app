@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ProfileHeader.module.css';
-import FotoPerfil from '../ProfileHeader/img/cars.png';
+
 import FotoObjeto from '../ProfileHeader/img/trofeo2.webp';
 import { getUserInfo } from '../../../services/api';
 
@@ -15,7 +15,8 @@ const ProfileHeader = () => {
     const [employeeData, setEmployeeData] = useState({
         name: '',
         level: 0,
-        progress: 0
+        progress: 0,
+        fotoPerfil: '/static/media/kiacarro3.950c68ff6334e1b067fd.png'
     });
 
     // Simulated API call
@@ -23,6 +24,7 @@ const ProfileHeader = () => {
         const fetchEmployeeData = async () => {
     
             const data = await getUserInfo();
+            console.log(data);
             
             setEmployeeData(data);
         };
@@ -38,7 +40,7 @@ const ProfileHeader = () => {
     
 
     const goToSettings = () => {
-        navigate('/settings');
+        navigate('/settings', { state: { employeeData } }) ;
     };
 
     return (
@@ -54,7 +56,7 @@ const ProfileHeader = () => {
             </div>
 
             <div className={styles.ProfilePic}>
-                <img src={FotoPerfil} alt="foto perfil" />
+                <img src={employeeData.fotoPerfil} alt="foto perfil" />
             </div>
 
             <div className={styles.EmployeeLevel}>
