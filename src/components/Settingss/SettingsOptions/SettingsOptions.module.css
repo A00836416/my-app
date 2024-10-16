@@ -5,7 +5,7 @@
     width: 90%;
     height: auto;
     justify-content: center;
-    bottom: 410px;
+    bottom: 460px;
 }
 
 .EditProfile{
@@ -59,7 +59,7 @@
     color: white;
     gap: 5px;
     justify-content: center;
-    top: 320px;
+    top: 340px;
 }
 
 .LogOutButton{
