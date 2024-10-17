@@ -40,6 +40,7 @@ const HomeTareaDiaria = () => {
 
     const tareasFiltradas = tareas.filter((tarea) => tarea.nivel.numero === selectedFase);
 
+
     const handleCardClick = (cardIndex) => {
         setActiveCard(activeCard === cardIndex ? null : cardIndex);
     };
