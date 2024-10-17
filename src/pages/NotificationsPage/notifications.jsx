@@ -39,14 +39,14 @@ const NotificationsPage = () => {
         try {
             const response = await notificationsService.getnotifications();
             const data = await response;
-
+    
+            // Transforma las notificaciones solo con título y fecha
             const transformedNotifications = data.map(notification => ({
                 id: notification.notificacionID,
                 title: notification.mensaje,
-                description: `${notification.nombreReceptor} ${notification.apellidoReceptor}`,
                 date: new Date(notification.fechaCreacion),
             }));
-
+    
             setGroupedNotifications(groupNotificationsByDate(transformedNotifications));
         } catch (error) {
             console.error('Error al cargar las notificaciones:', error);
@@ -54,6 +54,7 @@ const NotificationsPage = () => {
             setIsLoading(false);
         }
     };
+    
 
     const groupNotificationsByDate = (notifications) => {
         const grouped = {

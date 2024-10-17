@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './NotificationsList.module.css';
 
 const NotificationsList = ({ groupedNotifications }) => {
-    // Mapeo de claves a encabezados con espacios
     const headerMap = {
         hoy: 'Hoy',
         ayer: 'Ayer',
@@ -13,22 +12,24 @@ const NotificationsList = ({ groupedNotifications }) => {
     return (
         <div className={styles.notificationsContainer}>
             {Object.keys(groupedNotifications).map((key) => (
-                <div key={key}>
-                    <h2 className={styles.TituloFechas}>{headerMap[key]}</h2> {/* Usar el mapeo aquí */}
-                    <ul className={styles.Grupo}>
-                        {groupedNotifications[key].map((notification) => (
-                            <li key={notification.id} className={styles.Notificaciones}>
-                                <h3 className={styles.notificationTitle}>{notification.title}</h3>
-                                <p className={styles.notificationDescription}>{notification.description}</p>
-                                <span className={styles.notificationTime}>{getTimeAgo(notification.date)}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                groupedNotifications[key].length > 0 && ( // Verifica si hay notificaciones en la sección
+                    <div key={key}>
+                        <h2 className={styles.TituloFechas}>{headerMap[key]}</h2>
+                        <ul className={styles.Grupo}>
+                            {groupedNotifications[key].map((notification) => (
+                                <li key={notification.id} className={styles.Notificaciones}>
+                                    <h3 className={styles.notificationTitle}>{notification.title}</h3>
+                                    <span className={styles.notificationTime}>{getTimeAgo(notification.date)}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )
             ))}
         </div>
     );
 };
+
 
 // Función para calcular el tiempo relativo
 const getTimeAgo = (date) => {

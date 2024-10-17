@@ -1,15 +1,15 @@
 .notificationsContainer {
     padding: 16px;
-    max-height: calc(100vh - 240px); /* Ajuste basado en la parte superior */
+    max-height: calc(100vh - 240px); /* Ajuste basado en la altura total menos el espacio ocupado */
     overflow-y: auto; /* Habilitar desplazamiento vertical */
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    width: 100%;
     box-sizing: border-box;
     position: relative;
-    top: 0; /* Se ajusta desde la parte superior */
+    top: 100px; /* Mueve la lista hacia abajo 220px desde la parte superior */
 }
+
 
 .overlay {
     position: absolute;
@@ -59,17 +59,11 @@
 }
 
 .notificationTitle {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    margin-top: 20px;
-    
 }
 
-.notificationDescription {
-    font-size: 14px;
-    color: #bbb;
-}
 
 .notificationTime {
     font-size: 12px;
