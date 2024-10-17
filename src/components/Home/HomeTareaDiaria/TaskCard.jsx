@@ -1,8 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styles from './TaskCard.module.css';
+import modalStyles from './TaskModal.module.css';
+import { useLocation } from 'react-router-dom';
 
 const TaskCard = ({ tarea, index, activeCard, handleCardClick, handleStartTask, handleCompleteTask, handleRetryTask }) => {
+    const location = useLocation(); // Obtén la ubicación actual
+
+    // Verifica si está en ProfilePage y establece inProfile
+    const inProfile = location.pathname === '/profile'; // Cambia '/profile' según tu ruta
+    const inHome = location.pathname === '/home'; // Cambia '/home' según tu ruta
+
     const getTaskStatus = (tarea) => {
         if (!tarea.progresoEmpleado) return 'Not Started';
         return tarea.progresoEmpleado.estado;
@@ -92,6 +100,30 @@ const TaskCard = ({ tarea, index, activeCard, handleCardClick, handleStartTask, 
                     {renderTaskButton(tarea)}
                 </div>
             </div>
+            {inProfile && (
+    <span className={modalStyles.rewardImage}>
+        {tarea && tarea.objetos && tarea.objetos.length > 0 ? (
+            (() => {
+                const images = [];
+                const objetos = tarea.objetos;
+
+                for (let i = 0; i < objetos.length; i++) {
+                    images.push(
+                        <img 
+                            key={objetos[i].objetoID}
+                            src={`/${objetos[i].path.replace('my-app/public/', '')}`} 
+                            alt={objetos[i].nombre} 
+                        />
+                    );
+                }
+
+                return images;
+            })()
+        ) : (
+            <p>No hay imágenes disponibles</p>
+        )}
+    </span>
+)}
             {tarea.progresoEmpleado && tarea.progresoEmpleado.tiempoCompletado && (
                 <div className={styles.completionTime}>
                     Tiempo completado: {formatDuration(tarea.progresoEmpleado.tiempoCompletado)}
