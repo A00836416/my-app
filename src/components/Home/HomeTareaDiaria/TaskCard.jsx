@@ -54,11 +54,13 @@ const TaskCard = ({ tarea, index, activeCard, handleCardClick, handleStartTask, 
     };
 
     const formatDuration = (minutes) => {
-        if (minutes < 60) return `${minutes} min`;
+        if (minutes === 0) return '0 minutos';
+        if (minutes < 60 && minutes < 1) return `${minutes} minutos`;
         const hours = Math.floor(minutes / 60);
         const remainingMinutes = minutes % 60;
-        return `${hours}h ${remainingMinutes}m`;
+        return `${hours} hora${hours > 1 ? 's' : ''} ${remainingMinutes} minuto${remainingMinutes !== 1 ? 's' : ''}`;
     };
+    
 
     const status = getTaskStatus(tarea);
 

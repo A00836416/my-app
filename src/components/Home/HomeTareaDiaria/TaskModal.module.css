@@ -14,7 +14,7 @@
 }
 
 .activeCard {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(39, 39, 39, 0.8);
     color: white;
     border-radius: 16px;
     padding: 30px;
@@ -58,6 +58,7 @@
     flex-wrap: wrap;
     gap: 10px;
 }
+
 
 .taskInfo>span {
     background-color: rgba(255, 255, 255, 0.1);
@@ -152,3 +153,10 @@
         padding: 20px;
     }
 }
+
+.rewardImage img{
+    width: 100px; /* Define el ancho de la imagen */
+    height: 100px; /* Define la altura de la imagen */
+    object-fit: cover; /* Asegura que la imagen se ajuste sin distorsión */
+  }
+  
