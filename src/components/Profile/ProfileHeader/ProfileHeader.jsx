@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ProfileHeader.module.css';
-
 import FotoObjeto from '../ProfileHeader/img/trofeo2.webp';
 import { getUserInfo } from '../../../services/api';
 
@@ -28,6 +27,7 @@ const ProfileHeader = () => {
         const fetchEmployeeData = async () => {
             const data = await getUserInfo();
             setEmployeeData(data);
+            console.log("data:",data)
         };
 
         fetchEmployeeData();
@@ -69,11 +69,11 @@ const ProfileHeader = () => {
                         <img src={FotoObjeto} alt="objeto nivel" />
                     </div>
                     <div className={styles.InfoContainer}>
-                        <p className={styles.Nivel}>Nivel {employeeData.numeroNivel}</p>
+                        <p className={styles.Nivel}>Fase {employeeData.faseID ?? 0}</p>
                         <div className={styles.ProgressBar}>
                             <div
                                 className={styles.Progress}
-                                style={{ width: `${employeeData.experienciaTotal}%` }}
+                                style={{ width: `${employeeData.porcentajeProgresoFase }%` }}
                             ></div>
                         </div>
                     </div>
