@@ -69,3 +69,8 @@ td {
     height: 20px;
     /* Alto de la medalla */
 }
+
+.boldText {
+    font-weight: bold; /* Hacer el texto en negrita */
+    font-size: 1.2em; /* Aumentar el tamaño de la fuente (ajusta el valor según necesites) */
+}
