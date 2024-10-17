@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../EditProfilePage/EditProfile.module.css';
 import EditProfileHeader from '../../components/EditProfile/EditProfileHeader/EditProfileHeader';
 import InformacionPersonal from '../../components/EditProfile/InformacionPersonal/InformacionPersonal';
+import { message } from 'antd';
 import { updateUserInfo } from '../../services/api';
 
 const EditProfilePage = () => {
@@ -13,9 +14,9 @@ const EditProfilePage = () => {
             if (userInfo) {
                 console.log('Datos:', userInfo);
                 await updateUserInfo(userInfo);
-                alert('Información guardada exitosamente.');
+                message.success('Información guardada exitosamente');
             } else {
-                alert('No hay información para guardar.');
+                message.error('No hay información para guardar');
             }
         } catch (error) {
             console.error('Error al guardar la información:', error);
