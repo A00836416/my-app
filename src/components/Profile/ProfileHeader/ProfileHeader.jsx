@@ -79,6 +79,10 @@ const ProfileHeader = () => {
                     </div>
                 </div>
             </div>
+
+            <div className={styles.TitleRecompensas}>
+                <h2>Recompensas obtenidas</h2>
+            </div>
         </div>
     );
 };

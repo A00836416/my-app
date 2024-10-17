@@ -1,12 +1,14 @@
 .ProfileHeader{
-    position: absolute;
+    position: sticky;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: auto;
     justify-content: center;
     align-items: center;
-    bottom: 598px;
+    top: 28px; /* Fija la cabecera en la parte superior */
+    z-index: 10;
+    
 
 }
 
@@ -164,4 +166,17 @@ p.Kian{
     object-fit: contain; /* Hace que la imagen se ajuste al área, recortando lo necesario */
     object-position: center; /* Centra la imagen dentro del círculo */
     margin-top: 15px;
+}
+
+.TitleRecompensas{
+    display: flex;
+    color: white;
+    align-self: flex-start;
+    padding-left: 20px;
+    position: relative;
+    top: 15px;
+}
+
+.TitleRecompensas h2{
+    margin: 0;
 }
