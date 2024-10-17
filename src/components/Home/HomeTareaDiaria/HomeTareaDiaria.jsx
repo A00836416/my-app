@@ -14,6 +14,7 @@ const HomeTareaDiaria = () => {
     const [activeCard, setActiveCard] = useState(null);
     const [selectedFase, setSelectedFase] = useState(1);
     const activeCardRef = useRef(null);
+
     const fasesDesbloqueadas = [0, 1, 2, 3, 4];
 
     const fetchTareas = useCallback(async (isInitial = false) => {
@@ -145,16 +146,6 @@ const HomeTareaDiaria = () => {
         return tarea.progresoEmpleado.estado;
     };
 
-
-    const getTaskDuration = (tarea) => {
-        const duracion = tarea.duracionEstimada;
-        if (duracion === 1) {
-            return `${duracion} hora estimada`;
-        } else {
-            return `${duracion} horas estimadas`;
-        }
-    };
-
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
         const date = new Date(dateString);
@@ -168,11 +159,13 @@ const HomeTareaDiaria = () => {
     };
 
     const formatDuration = (minutes) => {
-        if (minutes < 60) return `${minutes} minutos`;
+        if (minutes === 0) return '0 minutos';
+        if (minutes < 60 && minutes < 1) return `${minutes} minutos`;
         const hours = Math.floor(minutes / 60);
         const remainingMinutes = minutes % 60;
         return `${hours} hora${hours > 1 ? 's' : ''} ${remainingMinutes} minuto${remainingMinutes !== 1 ? 's' : ''}`;
     };
+    
 
 
     if (isInitialLoading) return <div className={styles.loading}>Cargando tareas...</div>;
@@ -196,7 +189,7 @@ const HomeTareaDiaria = () => {
             </div>
 
             <div className={styles.cardsContainer}>
-                <ProgressChart tareas={tareas} />
+                <ProgressChart tareas={tareasFiltradas} />
                 {isUpdating && <div className={styles.updatingOverlay}>Actualizando...</div>}
                 {tareasFiltradas.length === 0 ? (
                     <p className={styles.noTasksMessage}>No hay tareas para esta fase</p>
@@ -257,6 +250,28 @@ const HomeTareaDiaria = () => {
                                     Nivel: {tareasFiltradas[activeCard].nivel.nombre} (Fase {tareasFiltradas[activeCard].nivel.numero})
                                 </span>
                             </div>
+                                <span className={modalStyles.rewardImage}>
+                                    {tareasFiltradas[activeCard] && tareasFiltradas[activeCard].objetos && tareasFiltradas[activeCard].objetos.length > 0 ? (
+                                        (() => {
+                                        const images = [];
+                                        const objetos = tareasFiltradas[activeCard].objetos;
+
+                                        for (let i = 0; i < objetos.length; i++) {
+                                            images.push(
+                                            <img 
+                                                key={objetos[i].objetoID}
+                                                src={`/${objetos[i].path.replace('my-app/public/', '')}`} 
+                                                alt={objetos[i].nombre} 
+                                            />
+                                            );
+                                        }
+
+                                        return images;
+                                        })()
+                                    ) : (
+                                        <p>No hay imágenes disponibles</p>
+                                    )}
+                                    </span>
                             {tareasFiltradas[activeCard].fechaLimite && (
                                 <div className={modalStyles.fechaLimite}>
                                     Fecha Límite: {formatDate(tareasFiltradas[activeCard].fechaLimite)}
