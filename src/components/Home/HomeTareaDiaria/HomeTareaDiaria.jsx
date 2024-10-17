@@ -7,15 +7,17 @@ import { taskService } from '../../../services/taskService';
 import { employeeService } from '../../../services/employeeService';
 import TaskCard from './TaskCard';
 
-const HomeTareaDiaria = () => {
+const HomeTareaDiaria = ({ userPhase }) => {
     const [tareas, setTareas] = useState([]);
     const [isInitialLoading, setIsInitialLoading] = useState(true);
     const [isUpdating, setIsUpdating] = useState(false);
     const [activeCard, setActiveCard] = useState(null);
     const [selectedFase, setSelectedFase] = useState(1);
+    const [showPhaseWarning, setShowPhaseWarning] = useState(false);
     const activeCardRef = useRef(null);
 
     const fasesDesbloqueadas = [0, 1, 2, 3, 4];
+
 
     const fetchTareas = useCallback(async (isInitial = false) => {
         try {
@@ -42,7 +44,13 @@ const HomeTareaDiaria = () => {
 
 
     const handleCardClick = (cardIndex) => {
-        setActiveCard(activeCard === cardIndex ? null : cardIndex);
+        const clickedTask = tareasFiltradas[cardIndex];
+        if (clickedTask.nivel.numero <= userPhase) {
+            setActiveCard(activeCard === cardIndex ? null : cardIndex);
+        } else {
+            setShowPhaseWarning(true);
+            setTimeout(() => setShowPhaseWarning(false), 3000); // Ocultar el aviso después de 3 segundos
+        }
     };
 
     const handleOutsideClick = (event) => {
@@ -166,7 +174,7 @@ const HomeTareaDiaria = () => {
         const remainingMinutes = minutes % 60;
         return `${hours} hora${hours > 1 ? 's' : ''} ${remainingMinutes} minuto${remainingMinutes !== 1 ? 's' : ''}`;
     };
-    
+
 
 
     if (isInitialLoading) return <div className={styles.loading}>Cargando tareas...</div>;
@@ -189,6 +197,31 @@ const HomeTareaDiaria = () => {
                 ))}
             </div>
 
+            <AnimatePresence>
+                {showPhaseWarning && (
+                    <motion.div
+                        className={styles.phaseWarningOverlay}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <motion.div
+                            className={styles.phaseWarning}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                        >
+                            <div className={styles.warningIcon}>
+                                <i className="fas fa-lock"></i>
+                            </div>
+                            <p className={styles.warningText}>
+                                No puedes acceder a tareas de fases superiores a tu fase actual ({userPhase}).
+                            </p>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <div className={styles.cardsContainer}>
                 <ProgressChart tareas={tareasFiltradas} />
                 {isUpdating && <div className={styles.updatingOverlay}>Actualizando...</div>}
@@ -208,6 +241,7 @@ const HomeTareaDiaria = () => {
                             renderTaskButton={renderTaskButton}
                             getDimensionName={getDimensionName}
                             getTaskStatus={getTaskStatus}
+                            isDisabled={tarea.nivel.numero > userPhase}
                         />
                     ))
                 )}
@@ -251,28 +285,28 @@ const HomeTareaDiaria = () => {
                                     Nivel: {tareasFiltradas[activeCard].nivel.nombre} (Fase {tareasFiltradas[activeCard].nivel.numero})
                                 </span>
                             </div>
-                                <span className={modalStyles.rewardImage}>
-                                    {tareasFiltradas[activeCard] && tareasFiltradas[activeCard].objetos && tareasFiltradas[activeCard].objetos.length > 0 ? (
-                                        (() => {
+                            <span className={modalStyles.rewardImage}>
+                                {tareasFiltradas[activeCard] && tareasFiltradas[activeCard].objetos && tareasFiltradas[activeCard].objetos.length > 0 ? (
+                                    (() => {
                                         const images = [];
                                         const objetos = tareasFiltradas[activeCard].objetos;
 
                                         for (let i = 0; i < objetos.length; i++) {
                                             images.push(
-                                            <img 
-                                                key={objetos[i].objetoID}
-                                                src={`/${objetos[i].path.replace('my-app/public/', '')}`} 
-                                                alt={objetos[i].nombre} 
-                                            />
+                                                <img
+                                                    key={objetos[i].objetoID}
+                                                    src={`/${objetos[i].path.replace('my-app/public/', '')}`}
+                                                    alt={objetos[i].nombre}
+                                                />
                                             );
                                         }
 
                                         return images;
-                                        })()
-                                    ) : (
-                                        <p>No hay imágenes disponibles</p>
-                                    )}
-                                    </span>
+                                    })()
+                                ) : (
+                                    <p>No hay imágenes disponibles</p>
+                                )}
+                            </span>
                             {tareasFiltradas[activeCard].fechaLimite && (
                                 <div className={modalStyles.fechaLimite}>
                                     Fecha Límite: {formatDate(tareasFiltradas[activeCard].fechaLimite)}

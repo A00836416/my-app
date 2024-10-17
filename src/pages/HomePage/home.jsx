@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { checkAuthStatus } from '../../services/api';
+import { checkAuthStatus, getUserInfo } from '../../services/api';
 import { AuthContext } from '../../App';
 import HomeHeader from '../../components/Home/HomeHeader/HomeHeader';
 import HomeTareaDiaria from '../../components/Home/HomeTareaDiaria/HomeTareaDiaria';
@@ -15,8 +15,9 @@ const HomePage = () => {
 
     const fetchUserData = useCallback(async () => {
         try {
-            const userData = await checkAuthStatus();
+            const userData = await getUserInfo();
             setUser(userData);
+
         } catch (error) {
             console.error('Error fetching user data:', error);
             setIsAuthenticated(false);
@@ -35,7 +36,7 @@ const HomePage = () => {
     return (
         <div className={styles.container}>
             <HomeHeader user={user} />
-            <HomeTareaDiaria />
+            <HomeTareaDiaria userPhase={user?.faseID || 0} />
         </div>
     );
 };

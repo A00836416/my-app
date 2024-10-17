@@ -225,3 +225,73 @@
     text-align: left;
     margin: 14px 0;
 }
+
+/* Añade o actualiza estos estilos en tu archivo HomeTareaDiaria.module.css */
+
+/* Actualiza estos estilos en tu archivo HomeTareaDiaria.module.css */
+
+.phaseWarningOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.phaseWarning {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    text-align: center;
+}
+
+.warningIcon {
+    background-color: #ff9800;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.warningIcon i {
+    font-size: 30px;
+}
+
+.warningText {
+    font-size: 16px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.phaseWarning {
+    animation: pulse 2s infinite;
+}
